@@ -15,6 +15,7 @@ class Ant:
         state: String representing state of ant: 'explorer' or 'follower'.
         B: Tuple representing the turning kernels (B1, B2, B3, B4). Default (0.25, 0.25, 0.25, 0.25).
         p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.5 (50%).
+        on_grid
     """
 
     def __init__(self, x = 128, y = 128, B = (0.25, 0.25, 0.25, 0.25), p_straight = 0.5):
@@ -24,9 +25,19 @@ class Ant:
         self.p_straight = p_straight
         self.direction = np.random.randint(0, 8)
         self.state = 'explorer' # self.determine_state() - WIP!! function is being implemented later, this is a placeholder FOR NOW
+        self.on_grid = True
 
     def __repr__(self):
         return f"x-loc: {self.x}, y-loc: {self.y}"
+    
+    # 'Get' functions
+    def get_direction(self):
+        """Gets the ant's intended direction to move."""
+        return self.direction
+    
+    def get_location(self):
+        """Gets ant's x, y location on the grid."""
+        return self.x, self.y
     
     # 'Set' functions
     def set_location(self, x_new, y_new):
@@ -42,8 +53,12 @@ class Ant:
         """set ant direction to new angle."""
         self.direction = direction_new
 
+    def set_on_grid(self, on_grid):
+        """Sets ant as "off" grid; for when an ant crosses the grid boundary."""
+        self.on_grid = on_grid
 
-    ###### Exploratory Movement ######
+
+    ###### Exploratory Movement Determination ######
     def new_random_delta_turn(self):
         """
         Function determines if ant will move straight or randomly turn.
@@ -113,4 +128,3 @@ def angle_of_turn(B):
     turn_direction = np.random.choice([-1, 1])
 
     return (angle_amount * turn_direction)
-    
