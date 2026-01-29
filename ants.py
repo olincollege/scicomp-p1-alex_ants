@@ -28,7 +28,7 @@ class Ant:
         self.on_grid = True
 
     def __repr__(self):
-        return f"x-loc: {self.x}, y-loc: {self.y}"
+        return f"ant | x-loc: {self.x}, y-loc: {self.y}, direction: {self.direction}, on grid: {self.on_grid}, probability forward movement: {self.p_straight}, turning kernel (B): {self.B}"
     
     # 'Get' functions
     def get_direction(self):

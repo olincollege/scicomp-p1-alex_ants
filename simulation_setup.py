@@ -2,6 +2,7 @@
 
 # imports
 import numpy as np
+import matplotlib.pyplot as mp
 
 # Global Variables
 
@@ -15,7 +16,7 @@ DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to curren
     (-1, 0),  # 6: Left
     (-1, -1), # 7: Up-Left
 ]
-TAU = 1 # "units" of pheromone ants deposit to their location on the grid at each timestep.
+TAU = 10 # "units" of pheromone ants deposit to their location on the grid at each timestep.
 
 # Grid class
 class Grid:
@@ -31,10 +32,10 @@ class Grid:
     def __init__(self, size=256, hill_loc=(128, 128)):
         self.size = size
         self.hill_loc = hill_loc
-        self.grid = np.zeros(size, size)
+        self.grid = np.zeros((size, size))
     
     def __repr__(self):
-        return f"Grid(size={self.size}x{self.size}, hill_loc={self.hill_loc})"
+        return f"Grid size = {self.size}x{self.size}, hill_loc = {self.hill_loc})"
 
     # 'Get' Functions
     def get_size(self):
@@ -43,13 +44,14 @@ class Grid:
     
     def get_pheromone_for_point(self, x, y):
         """Gets pheromone value for one point on the grid."""
+        return self.grid[x, y]
     
     def set_pheromone_for_point(self, x, y, value):
         """Sets new pheromone value for one point on the grid."""
         self.grid[x, y] = value
 
 
-# Simulation step functions
+######## Simulation step functions ########
 def move_ant(ant, grid):
     """
     Function moves the ant one lattice grid in the ant's chosen direction.
@@ -81,7 +83,7 @@ def move_ant(ant, grid):
 
 def pheromone_deposition(ant, grid):
     """
-    Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once every timestep. 
+    Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once per ant every timestep. 
     
     Args:
         ant: Ant object representing ant that needs to be moved for one step of the simulation.
@@ -92,8 +94,59 @@ def pheromone_deposition(ant, grid):
     """
     if ant.is_on_grid() == True:
         x_deposit, y_deposit = ant.get_location()
-        grid.set_pheromone_for_point(x_deposit, y_deposit, grid.get_pheromone_for_point() + TAU)
+        grid.set_pheromone_for_point(x_deposit, y_deposit, grid.get_pheromone_for_point(x_deposit, y_deposit) + TAU)
+
+def pheromone_evaporation(grid):
+    """
+    Function that performs global evaporation of pheromone at each grid point. Meant to be run once every timestep.
+
+    Args:
+        grid: Grid object representing the grid on which simulation is occuring.
+    Returns:
+        None.
+    """
+    for point_x in range(grid.size):
+        for point_y in range(grid.size):
+            new_pheromone_value = grid.get_pheromone_for_point(point_x, point_y) - 0.5
+
+            if new_pheromone_value <= 0: #If new proposed value is 0 or negative, set the pheromone concentration value to 0
+                grid.set_pheromone_for_point(point_x, point_y, 0)
+            else:
+                grid.set_pheromone_for_point(point_x, point_y, new_pheromone_value)
+
+#### WIP ####
+# def add_ant():
+#     """
+#     Function that adds an ant to the grid. Meant to be run once per timestep.
+#     """
+
+
+######## Wrapper simulation function - all functions for one step ########
+def simulation_step(ants_on_grid, simulation_grid):    # WIP!!! Right now only working with one ant!!!!! 
+    """
+    Wrapper function for all things that need to happen in a simulation step.
+    """
+    # generate new ant per timestep
+    # add_ant() # WIP function (below)
+
+    # ant movement + ant deposition to new position
+    for ant in ants_on_grid:
+        move_ant(ant, simulation_grid)
+        if ant.is_on_grid() == True:
+            pheromone_deposition(ant, simulation_grid)
+    # global grid evaporation
+    pheromone_evaporation(simulation_grid)
 
 # Visualization function
 # needs to visualize both the C(x,t) values from the grid attribute of the Grid object and the ant location at the final timestep.
+def visualize_grid(ants_on_grid, simulation_grid):
+    """
+    Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
+    """
+    grid = simulation_grid.grid
+    mp.figure()
+    mp.imshow(grid, cmap = "Greys", origin = "upper")
+    mp.colorbar(label = "Pheromone Concentration (C(x,t))")
+
+    mp.show()
 
