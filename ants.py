@@ -39,6 +39,10 @@ class Ant:
         """Gets ant's x, y location on the grid."""
         return self.x, self.y
     
+    def is_on_grid(self):
+        """Returns True is ant on grid, False if not."""
+        return self.on_grid
+    
     # 'Set' functions
     def set_location(self, x_new, y_new):
         """Updates x and y location of ant to new x and y location."""

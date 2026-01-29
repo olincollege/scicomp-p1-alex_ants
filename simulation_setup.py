@@ -15,6 +15,7 @@ DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to curren
     (-1, 0),  # 6: Left
     (-1, -1), # 7: Up-Left
 ]
+TAU = 1 # "units" of pheromone ants deposit to their location on the grid at each timestep.
 
 # Grid class
 class Grid:
@@ -35,10 +36,17 @@ class Grid:
     def __repr__(self):
         return f"Grid(size={self.size}x{self.size}, hill_loc={self.hill_loc})"
 
-    
+    # 'Get' Functions
     def get_size(self):
         """Gets grid size."""
         return self.size
+    
+    def get_pheromone_for_point(self, x, y):
+        """Gets pheromone value for one point on the grid."""
+    
+    def set_pheromone_for_point(self, x, y, value):
+        """Sets new pheromone value for one point on the grid."""
+        self.grid[x, y] = value
 
 
 # Simulation step functions
@@ -71,6 +79,20 @@ def move_ant(ant, grid):
 
     ant.set_location(new_x, new_y)
 
+def pheromone_deposition(ant, grid):
+    """
+    Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once every timestep. 
+    
+    Args:
+        ant: Ant object representing ant that needs to be moved for one step of the simulation.
+        grid: Grid object representing the grid on which the ant needs to move.
+    
+    Returns:
+        None.
+    """
+    if ant.is_on_grid() == True:
+        x_deposit, y_deposit = ant.get_location()
+        grid.set_pheromone_for_point(x_deposit, y_deposit, grid.get_pheromone_for_point() + TAU)
 
 # Visualization function
 # needs to visualize both the C(x,t) values from the grid attribute of the Grid object and the ant location at the final timestep.
