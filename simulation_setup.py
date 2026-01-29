@@ -17,6 +17,17 @@ DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to curren
     (-1, -1), # 7: Up-Left
 ]
 TAU = 10 # "units" of pheromone ants deposit to their location on the grid at each timestep.
+direction_to_angle = { # for the visualization function, converting a direction to the angle for ant marker ONLY
+    0: 90,
+    1: 45,
+    2: 0,
+    3: -45,
+    4: -90,
+    5: -135,
+    6: 180,
+    7: 135,
+}
+
 
 # Grid class
 class Grid:
@@ -146,10 +157,20 @@ def visualize_grid(ants_on_grid, simulation_grid):
     """
     Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
     """
+
+    # showing grid pheromone concentration
     grid = simulation_grid.grid
     mp.figure()
     mp.imshow(grid, cmap = "Greys", origin = "upper")
     mp.colorbar(label = "Pheromone Concentration (C(x,t))")
+
+    # showing ant 
+    for ant in ants_on_grid:
+        x, y = ant.get_location()
+        direction = ant.get_direction()
+
+        angle = direction_to_angle[direction]
+        mp.scatter(x, y, marker = (3, 0, angle), c="red", s=100,)
 
     mp.show()
 
