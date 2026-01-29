@@ -11,7 +11,7 @@ simulation_grid = ss.Grid(size=grid_size, hill_loc=(hill_loc, hill_loc))
 ants_on_grid = [] # will store all ant objects on the grid
 
 # First ant
-ant = a.Ant(x = hill_loc, y = hill_loc, p_straight=0)
+ant = a.Ant(x = hill_loc, y = hill_loc, p_straight=0.5)
 ants_on_grid.append(ant)
 
 ### for sanity checking ###

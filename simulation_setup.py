@@ -63,8 +63,11 @@ def move_ant(ant, grid):
     Returns:
         None.
     """
-    ant_direction = ant.get_direction() # gets the 0-7 direction where ant is headed relative to 0 being 'up'.
     ant_x, ant_y = ant.get_location() # gets current x/y location of ant
+
+    # update direction
+    ant.update_direction()
+    ant_direction = ant.get_direction() # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
 
     dx, dy = DIRECTION_VECTORS[ant_direction]
 
