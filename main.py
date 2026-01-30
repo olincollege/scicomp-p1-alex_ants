@@ -5,7 +5,7 @@ import simulation_setup as ss
 import ants as a
 
 # Simulation 1
-grid_size = 30
+grid_size = 10
 hill_loc = int(grid_size/2)
 simulation_grid = ss.Grid(size=grid_size, hill_loc=(hill_loc, hill_loc))
 ants_on_grid = [] # will store all ant objects on the grid
@@ -25,7 +25,7 @@ for i in range (0, num_steps):
     ss.simulation_step(ants_on_grid, simulation_grid)
     ##### SANITY CHECK #####
     print(ant)
-    # ss.visualize_grid(ants_on_grid, simulation_grid)
+    ss.visualize_grid(ants_on_grid, simulation_grid)
     print(i)
 
 ### sanity checking simulation run ###

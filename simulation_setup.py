@@ -74,26 +74,27 @@ def move_ant(ant, grid):
     Returns:
         None.
     """
-    ant_x, ant_y = ant.get_location() # gets current x/y location of ant
+    if ant.is_on_grid():
+        ant_x, ant_y = ant.get_location() # gets current x/y location of ant
 
-    # update direction
-    ant.update_direction()
-    ant_direction = ant.get_direction() # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
+        # update direction
+        ant.update_direction()
+        ant_direction = ant.get_direction() # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
 
-    dx, dy = DIRECTION_VECTORS[ant_direction]
+        dx, dy = DIRECTION_VECTORS[ant_direction]
 
-    new_x = ant_x + dx
-    new_y = ant_y + dy
+        new_x = ant_x + dx
+        new_y = ant_y + dy
 
-    # If ant moving across grid boundary:
-    if new_x > (grid.get_size()-1) or new_x < 0:
-        ant.set_on_grid(False) # sets the ant as off the grid
-        return
-    if new_y > (grid.get_size()-1) or new_y < 0:
-        ant.set_on_grid(False) # sets the ant as off the grid
-        return
+        # If ant moving across grid boundary:
+        if new_x > (grid.get_size()-1) or new_x < 0:
+            ant.set_on_grid(False) # sets the ant as off the grid
+            return
+        if new_y > (grid.get_size()-1) or new_y < 0:
+            ant.set_on_grid(False) # sets the ant as off the grid
+            return
 
-    ant.set_location(new_x, new_y)
+        ant.set_location(new_x, new_y)
     
 def pheromone_deposition(ant, grid):
     """
