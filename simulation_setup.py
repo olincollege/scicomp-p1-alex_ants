@@ -168,11 +168,12 @@ def visualize_grid(ants_on_grid, simulation_grid):
 
     # showing ant 
     for ant in ants_on_grid:
-        x, y = ant.get_location()
-        direction = ant.get_direction()
+        if ant.is_on_grid():
+            x, y = ant.get_location()
+            direction = ant.get_direction()
 
-        angle = direction_to_angle[direction]
-        mp.scatter(x, y, marker = (3, 0, angle), c="red", s=100,)
+            angle = direction_to_angle[direction]
+            mp.scatter(x, y, marker = (3, 0, angle), c="red", s=100)
 
     mp.show()
 
