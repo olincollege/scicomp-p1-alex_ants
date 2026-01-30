@@ -16,7 +16,7 @@ DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to curren
     (-1, 0),  # 6: Left
     (-1, -1), # 7: Up-Left
 ]
-TAU = 10 # "units" of pheromone ants deposit to their location on the grid at each timestep.
+TAU = 8 # "units" of pheromone ants deposit to their location on the grid at each timestep.
 direction_to_angle = { # for the visualization function, converting a direction to the angle for ant marker ONLY
     0: 90,
     1: 45,

@@ -13,12 +13,12 @@ class Ant:
         y: Int representing y-location at current timestep. Default is 128.
         direction: Int representing direction of the ant's movement from the previous timestep to current timestep; orients what direction is "forward".
         state: String representing state of ant: 'explorer' or 'follower'.
-        B: Tuple representing the turning kernels (B1, B2, B3, B4). Default (0.25, 0.25, 0.25, 0.25).
-        p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.5 (50%).
+        B: Tuple representing the turning kernels (B1, B2, B3, B4). Default (0.360, 0.047, 0.008, 0.004) according to Fig 3 description.
+        p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.509; decimal percentage to get to 1 after summing all B kernels.
         on_grid
     """
 
-    def __init__(self, x = 128, y = 128, B = (0.25, 0.25, 0.25, 0.25), p_straight = 0.5):
+    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.004), p_straight = 0.509):
         self.x = x
         self.y = y
         self.B = B
