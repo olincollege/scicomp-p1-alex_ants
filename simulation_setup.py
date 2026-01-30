@@ -121,7 +121,7 @@ def pheromone_evaporation(grid):
     """
     for point_x in range(grid.size):
         for point_y in range(grid.size):
-            new_pheromone_value = grid.get_pheromone_for_point(point_x, point_y) - 0.5
+            new_pheromone_value = grid.get_pheromone_for_point(point_x, point_y) - 1
 
             if new_pheromone_value <= 0: #If new proposed value is 0 or negative, set the pheromone concentration value to 0
                 grid.set_pheromone_for_point(point_x, point_y, 0)
