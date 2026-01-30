@@ -126,7 +126,11 @@ def angle_of_turn(B):
 
     # use turning kernel B to randomize how many 45 degree directions the ant turns
     turn_angles = [1, 2, 3, 4] # each value represents turns in 45 degree increments; 0 is forward.
-    angle_amount = np.random.choice(turn_angles, p = B)
+
+    # modifying 'B' so that values add up to 1 but probabilities are still the proportionally without:
+    B_adjusted = tuple(np.array(B, dtype=float) / sum(B))
+
+    angle_amount = np.random.choice(turn_angles, p = B_adjusted)
 
     # randomize left or right, 50% chance each way
     turn_direction = np.random.choice([-1, 1])
