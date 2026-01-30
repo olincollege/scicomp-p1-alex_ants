@@ -55,11 +55,11 @@ class Grid:
     
     def get_pheromone_for_point(self, x, y):
         """Gets pheromone value for one point on the grid."""
-        return self.grid[x, y]
+        return self.grid[y, x]
     
     def set_pheromone_for_point(self, x, y, value):
         """Sets new pheromone value for one point on the grid."""
-        self.grid[x, y] = value
+        self.grid[y, x] = value
 
 
 ######## Simulation step functions ########
@@ -94,7 +94,7 @@ def move_ant(ant, grid):
         return
 
     ant.set_location(new_x, new_y)
-
+    
 def pheromone_deposition(ant, grid):
     """
     Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once per ant every timestep. 
@@ -109,6 +109,7 @@ def pheromone_deposition(ant, grid):
     if ant.is_on_grid() == True:
         x_deposit, y_deposit = ant.get_location()
         grid.set_pheromone_for_point(x_deposit, y_deposit, grid.get_pheromone_for_point(x_deposit, y_deposit) + TAU)
+        print(f"Pheromone deposited at: x = {x_deposit}, y = {y_deposit}")
 
 def pheromone_evaporation(grid):
     """
