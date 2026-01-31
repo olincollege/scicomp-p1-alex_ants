@@ -3,11 +3,12 @@
 
 import simulation_setup as ss
 import ants as a
+import grid as g
 
 # Simulation 1
 grid_size = 4
 hill_loc = int(grid_size/2)
-simulation_grid = ss.Grid(size=grid_size, hill_loc=(hill_loc, hill_loc))
+simulation_grid = g.Grid(size=grid_size, hill_loc=(hill_loc, hill_loc))
 ants_on_grid = [] # will store all ant objects on the grid
 
 # First ant
