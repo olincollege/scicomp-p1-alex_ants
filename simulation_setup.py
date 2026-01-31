@@ -147,9 +147,11 @@ def simulation_step(ants_on_grid, simulation_grid):    # WIP!!! Right now only w
 
     # ant movement + ant deposition to new position
     for ant in ants_on_grid:
-        move_ant(ant, simulation_grid)
         if ant.is_on_grid() == True:
             pheromone_deposition(ant, simulation_grid)
+            move_ant(ant, simulation_grid)
+        else: # if ant moves off grid, remove ant
+            ants_on_grid.remove(ant)
     # global grid evaporation
     pheromone_evaporation(simulation_grid)
 
@@ -164,7 +166,10 @@ def visualize_grid(ants_on_grid, simulation_grid):
     grid = simulation_grid.grid
     mp.figure()
     mp.imshow(grid, cmap = "Greys", origin = "upper")
+
     mp.colorbar(label = "Pheromone Concentration (C(x,t))")
+    mp.xlim(0, simulation_grid.get_size())
+    mp.ylim(simulation_grid.get_size(), 0)  
 
     # showing ant 
     for ant in ants_on_grid:
