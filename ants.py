@@ -16,10 +16,9 @@ class Ant:
         B: Tuple representing the turning kernels (B1, B2, B3, B4). Default (0.360, 0.047, 0.008, 0.004) according to Fig 3 description.
         p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.509; decimal percentage to get to 1 after summing all B kernels.
         on_grid
-        fidelity: Int representing the probability per iteration of the ant remaining on a trail with a local concentration of C
     """
 
-    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.004), p_straight = 0.509, fidelity = 0):
+    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.004), p_straight = 0.509):
         self.x = x
         self.y = y
         self.B = B
@@ -27,7 +26,6 @@ class Ant:
         self.direction = np.random.randint(0, 8)
         self.state = 'explorer' # self.determine_state() - WIP!! function is being implemented later, this is a placeholder FOR NOW
         self.on_grid = True
-        self.fidelity = 0
 
     def __repr__(self):
         return f"ant | x-loc: {self.x}, y-loc: {self.y}, direction: {self.direction}, on grid: {self.on_grid}, probability forward movement: {self.p_straight}, turning kernel (B): {self.B}"
