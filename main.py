@@ -6,6 +6,7 @@ import ants as a
 import grid as g
 
 # Simulation 1
+fidelity = 255 # according to Fig 3a from the paper
 grid_size = 4
 hill_loc = int(grid_size/2)
 simulation_grid = g.Grid(size=grid_size, hill_loc=(hill_loc, hill_loc))
