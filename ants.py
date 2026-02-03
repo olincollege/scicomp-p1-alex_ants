@@ -84,9 +84,41 @@ class Ant:
             delta_turn = angle_of_turn(self.B)
         return delta_turn
     
-    def update_direction(self):
+    ###### Follower Movement Determination ######
+    def follower_turn(self):
         """
-        Function updates ant direction with new delta_turn. Determines the new "forward" direction in terms of 45 degree turn units (0-7). Positive is clockwise.
+        Docstring for follower_turn
+        
+        :param self: Description
+        """
+        ant_x, ant_y = self.get_location()
+        # check the values of 7 - 0 - 1, so grid values to left, forward, and right
+        C_0 = self.direction
+        C_1 = self.direction + 
+        C_7 = 
+        if C_0 > C_1 and C_0 > C_7: # if C(0) is > C(7) and C(1): # if trail moves forward
+            delta_turn = 0
+        elif C_1 == C_7: # set state as explorer, run update_direction again
+            self.set_ant_state('explorer')
+            self.explorer_turn()
+        elif C_1 > C_7: # if C(1) > C(7): # if left concentration is greater than right C, move left
+            delta_turn = 1
+        elif C_1 < C_7: # if C(7) > C(1): # if right C is greater than the left C, move right
+            delta_turn = 7
+        return delta_turn
+    
+    def explorer_turn(self):
+        """
+        Docstring for explorer_turn
+        
+        :param self: Description
+        """
+        delta_turn = self.new_random_delta_turn() # determines turn only based on turning kernel and probability to go straight
+        return delta_turn
+
+    def update_direction(self, grid):
+        """
+        Function updates ant direction. Determines the new "forward" direction in terms of 45 degree turn units (0-7). Positive is clockwise.
         0: Forward
         1: Upper right (45 degrees)
         2: Right (90 degrees)
@@ -98,6 +130,7 @@ class Ant:
         
         Args:
             self: Ant object representing the ant.
+            grid: Grid object used in simulation.
         
         Returns:
             None
@@ -106,22 +139,11 @@ class Ant:
         new_state = self.determine_state()
 
         if new_state == 'explorer':
-            delta_turn = self.new_random_delta_turn() # determines turn only based on turning kernel and probability to go straight
-            new_direction = (self.direction + delta_turn) % 8 # the remainder here turns the left "negative" delta_turns into 4, 5, 6, 7. 
+            delta_turn = self.explorer_turn() 
         elif new_state == 'follower':
-            # check the values of 7 - 0 - 1, so grid values to left, forward, and right
-            # if C(0) is > C(7) and C(1): # if trail moves forward
-                #new_direction = 0 # move forward
-            # if C(1) = C(7):
-                # set state as explorer
-                # run update_direction again
-            # if C(1) > C(7): # if left concentration is greater than right C, move left
-                #new_direction = 1
-            # if C(7) > C(1): # if right C is greater than the left C, move right
-                #new_direction = 7
-            
-        # need to get new_direction
-        new_direction = 0
+            yuh
+
+        new_direction = (self.direction + delta_turn) % 8 # the remainder here turns the left "negative" delta_turns into 4, 5, 6, 7.
         
         self.set_direction(new_direction)
 
@@ -140,10 +162,10 @@ class Ant:
         """
         fidelity = 255
 
-        if np.random(0, 256) < fidelity: # if the ant is staying a follower
-            self.set_ant_state == 'follower'
+        if np.random.randint(0, 256) < fidelity: # if the ant is staying a follower
+            self.set_ant_state('follower')
         else:
-            self.set_ant_state == 'explorer'
+            self.set_ant_state('explorer')
 
         return self.get_state()
 
