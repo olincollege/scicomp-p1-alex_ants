@@ -26,7 +26,7 @@ print ("####### DURING SIMULATION #######")
 num_steps = 3
 for i in range (0, num_steps):
     print(i)
-    ss.simulation_step(ants_on_grid, simulation_grid)
+    ss.simulation_step(ants_on_grid, simulation_grid, fidelity)
 
     # sanity checking for pheromone concentration where ant disappears off grid
     print(ant.is_on_grid)

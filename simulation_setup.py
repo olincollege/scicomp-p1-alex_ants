@@ -104,9 +104,17 @@ def pheromone_evaporation(grid):
 
 
 ######## Wrapper simulation function - all functions for one step ########
-def simulation_step(ants_on_grid, simulation_grid):    # WIP!!! Right now only working with one ant!!!!! 
+def simulation_step(ants_on_grid, simulation_grid, fidelity):    # WIP!!! Right now only working with one ant!!!!! 
     """
     Wrapper function for all things that need to happen in a simulation step.
+
+    Args:
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        simulation_grid: Grid object representing lattice ants are being simulated on.
+        fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
+
+    Returns:
+        None.
     """
     # generate new ant per timestep
     # add_ant() # WIP function (below)
@@ -116,7 +124,9 @@ def simulation_step(ants_on_grid, simulation_grid):    # WIP!!! Right now only w
         if ant.is_on_grid() == True:
             pheromone_deposition(ant, simulation_grid)
             move_ant(ant, simulation_grid)
-        else: # if ant moves off grid, remove ant
+            if ant.is_on_grid() == False: # if ant moves off grid, remove ant
+                ants_on_grid.remove(ant)
+        else: # if ant somehow off grid but still in ants_on_grid, remove ant
             ants_on_grid.remove(ant)
     # global grid evaporation
     pheromone_evaporation(simulation_grid)
