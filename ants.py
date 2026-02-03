@@ -39,6 +39,10 @@ class Ant:
         """Gets ant's x, y location on the grid."""
         return self.x, self.y
     
+    def get_state(self):
+        """Gets ant's state: explorer or follower"""
+        return self.state
+    
     def is_on_grid(self):
         """Returns True is ant on grid, False if not."""
         return self.on_grid
@@ -98,17 +102,52 @@ class Ant:
         Returns:
             None
         """
-        delta_turn = self.new_random_delta_turn()
+        # determine if new state is explorer or follower
+        new_state = self.determine_state()
 
-        new_direction = (self.direction + delta_turn) % 8 # the remainder here turns the left "negative" delta_turns into 4, 5, 6, 7. 
+        if new_state == 'explorer':
+            delta_turn = self.new_random_delta_turn() # determines turn only based on turning kernel and probability to go straight
+            new_direction = (self.direction + delta_turn) % 8 # the remainder here turns the left "negative" delta_turns into 4, 5, 6, 7. 
+        elif new_state == 'follower':
+            # check the values of 7 - 0 - 1, so grid values to left, forward, and right
+            # if C(0) is > C(7) and C(1): # if trail moves forward
+                #new_direction = 0 # move forward
+            # if C(1) = C(7):
+                # set state as explorer
+                # run update_direction again
+            # if C(1) > C(7): # if left concentration is greater than right C, move left
+                #new_direction = 1
+            # if C(7) > C(1): # if right C is greater than the left C, move right
+                #new_direction = 7
+            
+        # need to get new_direction
+        new_direction = 0
         
         self.set_direction(new_direction)
 
 
-
     # State determination function placeholder - will implement when multiple ants/second round of simulation
-    def determine_state(self):
-        """WIP - Will return string representing ant's 'follower' or 'explorer' state."""
+    def determine_state(self, fidelity):
+        """
+        Determines whether or not ant will be follower or explorer based on fidelity.
+
+        Args:
+            fidelity: Int representing the user input fidelity value. Probability that the ant will stay on the path.
+
+        Returns:
+            self.get_state(): String representing ant's state: explorer or follower"
+        
+        """
+        fidelity = 255
+
+        if np.random(0, 256) < fidelity: # if the ant is staying a follower
+            self.set_ant_state == 'follower'
+        else:
+            self.set_ant_state == 'explorer'
+
+        return self.get_state()
+
+
 
 
 
@@ -116,7 +155,7 @@ class Ant:
 
 def angle_of_turn(B):
     """
-    Function generates a new random turn angle for an explorer ant's change in direction.
+    Function generates a new turn angle with B kernel for an explorer ant's change in direction.
 
     Args:
         B: Tuple representing the turning kernels (B1, B2, B3, B4). Default (0.25, 0.25, 0.25, 0.25).
