@@ -4,10 +4,12 @@
 import simulation_setup as ss
 import ants as a
 import grid as g
+import matplotlib.pyplot as mp
+
 
 # Simulation 1
 fidelity = 255 # according to Fig 3a from the paper
-grid_size = 100
+grid_size = 256
 hill_loc = int(grid_size/2)
 simulation_grid = g.Grid(grid_size, hill_loc)
 ants_on_grid = [] # will store all ant objects on the grid
@@ -24,8 +26,9 @@ print(simulation_grid)
 
 ### run and print simulation ###
 print ("####### DURING SIMULATION #######")
-num_steps = 150
-for i in range (0, num_steps):
+mp.figure()
+num_steps = 100
+for i in range (num_steps):
     print(i)
     ss.simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity)
 
@@ -37,10 +40,17 @@ for i in range (0, num_steps):
     ##### SANITY CHECK #####
     # print(ant)
     # ss.visualize_grid(ants_on_grid, simulation_grid)
+    ss.visualize_grid(
+    ants_on_grid,
+    simulation_grid,
+    i,
+    pause=0.05
+    )
+mp.show()
 
 ### sanity checking simulation run ###
 print ("####### POST SIMULATION #######")
 print(ants_on_grid)
 print(ant)
 print(simulation_grid.grid)
-ss.visualize_grid(ants_on_grid, simulation_grid)
+# ss.visualize_grid(ants_on_grid, simulation_grid)

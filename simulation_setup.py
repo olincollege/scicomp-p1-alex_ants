@@ -143,23 +143,50 @@ def visualize_grid(ants_on_grid, simulation_grid):
     Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
     """
 
+#     # showing grid pheromone concentration
+#     grid = simulation_grid.grid
+#     mp.figure()
+#     mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=60)
+
+#     mp.colorbar(label = "Pheromone Concentration (C(x,t))")
+#     mp.xlim(0, simulation_grid.get_size())
+#     mp.ylim(simulation_grid.get_size(), 0)  
+
+#     # showing ant 
+#     for ant in ants_on_grid:
+#         if ant.is_on_grid():
+#             x, y = ant.get_location()
+#             direction = ant.get_direction()
+
+#             angle = direction_to_angle[direction]
+#             mp.scatter(x, y, marker = (3, 0, angle), c="red", s=20)
+
+#     mp.show()
+
+def visualize_grid(ants_on_grid, simulation_grid, step, pause=0.05):
+    """
+    Live visualization of grid + ants.
+    """
+    mp.clf()
+
     # showing grid pheromone concentration
     grid = simulation_grid.grid
-    mp.figure()
+
     mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=60)
-
-    mp.colorbar(label = "Pheromone Concentration (C(x,t))")
+    mp.colorbar(label="Pheromone Concentration (C(x,t))")
     mp.xlim(0, simulation_grid.get_size())
-    mp.ylim(simulation_grid.get_size(), 0)  
+    mp.ylim(simulation_grid.get_size(), 0)
+    mp.title(f"Step {step}")
 
-    # showing ant 
+    # showing ant
     for ant in ants_on_grid:
         if ant.is_on_grid():
             x, y = ant.get_location()
             direction = ant.get_direction()
 
             angle = direction_to_angle[direction]
-            mp.scatter(x, y, marker = (3, 0, angle), c="red", s=20)
+            mp.scatter(x, y, marker=(3, 0, angle), c="red", s=20)
 
-    mp.show()
+    mp.pause(pause)
+
 
