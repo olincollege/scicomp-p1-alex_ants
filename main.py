@@ -14,7 +14,9 @@ ants_on_grid = [] # will store all ant objects on the grid
 
 # First ant
 ant = a.Ant(x = hill_loc, y = hill_loc, p_straight=0.5)
+ant1 = a.Ant(x = hill_loc, y = hill_loc, p_straight=0.5)
 ants_on_grid.append(ant)
+ants_on_grid.append(ant1)
 
 ### for sanity checking ###
 print(ant)
@@ -34,7 +36,7 @@ for i in range (0, num_steps):
     print(simulation_grid.get_pheromone_for_point(ant_loc_x, ant_loc_y))
     print(ants_on_grid)
     ##### SANITY CHECK #####
-    print(ant)
+    # print(ant)
     ss.visualize_grid(ants_on_grid, simulation_grid)
 
 ### sanity checking simulation run ###

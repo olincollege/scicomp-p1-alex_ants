@@ -29,7 +29,7 @@ direction_to_angle = { # for the visualization function, converting a direction 
 
 
 ######## Simulation step functions ########
-def move_ant(ant, grid):
+def move_ant(ant, grid, fidelity):
     """
     Function moves the ant one lattice grid in the ant's chosen direction.
 
@@ -44,7 +44,7 @@ def move_ant(ant, grid):
         ant_x, ant_y = ant.get_location() # gets current x/y location of ant
 
         # update direction
-        ant.update_direction()
+        ant.update_direction(grid, fidelity)
         ant_direction = ant.get_direction() # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
 
         dx, dy = DIRECTION_VECTORS[ant_direction]
@@ -123,7 +123,7 @@ def simulation_step(ants_on_grid, simulation_grid, fidelity):    # WIP!!! Right 
     for ant in ants_on_grid:
         if ant.is_on_grid() == True:
             pheromone_deposition(ant, simulation_grid)
-            move_ant(ant, simulation_grid)
+            move_ant(ant, simulation_grid, fidelity)
             if ant.is_on_grid() == False: # if ant moves off grid, remove ant
                 ants_on_grid.remove(ant)
         else: # if ant somehow off grid but still in ants_on_grid, remove ant
