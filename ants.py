@@ -196,8 +196,6 @@ class Ant:
 
 
 
-
-
 ########### HELPER FUNCTIONS #########
 
 def angle_of_turn(B):

@@ -15,28 +15,35 @@ class Grid:
         grid: Numpy 2D array of points.
     """
 
-    def __init__(self, size=256, hill_loc=(128, 128)):
+    def __init__(self, size=256, hill_loc=128):
         self.size = size
         self.hill_loc = hill_loc
         self.grid = np.zeros((size, size))
     
     def __repr__(self):
-        return f"Grid size = {self.size}x{self.size}, hill_loc = {self.hill_loc})"
+        return f"Grid size = {self.size}x{self.size}, hill_loc = {self.hill_loc}x{self.hill_loc})"
 
     # 'Get' Functions
     def get_size(self):
         """Gets grid size."""
         return self.size
     
+    def get_hill_loc(self):
+        """Gets hill location."""
+        print(self.hill_loc)
+        return self.hill_loc
+    
     def get_pheromone_for_point(self, x, y):
         """Gets pheromone value for one point on the grid. Returns C = 0 if point off grid.
-        
         """
         if x < 0 or x >= self.size or y < 0 or y >= self.size:
             return 0
-        return self.grid[y, x]
+        else:
+            return self.grid[y, x]
     
     def set_pheromone_for_point(self, x, y, value):
         """Sets new pheromone value for one point on the grid."""
+        if x < 0 or x >= self.size or y < 0 or y >= self.size:
+            return
         self.grid[y, x] = value
 

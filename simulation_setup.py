@@ -3,6 +3,7 @@
 # imports
 import numpy as np
 import matplotlib.pyplot as mp
+import ants as a
 
 # Global Variables
 DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to current position for ant movement!!
@@ -76,7 +77,6 @@ def pheromone_deposition(ant, grid):
     if ant.is_on_grid() == True:
         x_deposit, y_deposit = ant.get_location()
         grid.set_pheromone_for_point(x_deposit, y_deposit, grid.get_pheromone_for_point(x_deposit, y_deposit) + TAU)
-        print(f"Pheromone deposited at: x = {x_deposit}, y = {y_deposit}")
 
 def pheromone_evaporation(grid):
     """
@@ -96,15 +96,20 @@ def pheromone_evaporation(grid):
             else:
                 grid.set_pheromone_for_point(point_x, point_y, new_pheromone_value)
 
-#### WIP ####
-# def add_ant():
-#     """
-#     Function that adds an ant to the grid. Meant to be run once per timestep.
-#     """
+def add_ant(ants_on_grid, hill_loc, p_straight):
+    """
+    Function that adds an ant to the grid. Meant to be run once per timestep.
+
+    Args:
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+    """
+    ants_on_grid.append(a.Ant(x = hill_loc, y = hill_loc, p_straight=p_straight))
+    return ants_on_grid
+
 
 
 ######## Wrapper simulation function - all functions for one step ########
-def simulation_step(ants_on_grid, simulation_grid, fidelity):    # WIP!!! Right now only working with one ant!!!!! 
+def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):    # WIP!!! Right now only working with one ant!!!!! 
     """
     Wrapper function for all things that need to happen in a simulation step.
 
@@ -117,7 +122,7 @@ def simulation_step(ants_on_grid, simulation_grid, fidelity):    # WIP!!! Right 
         None.
     """
     # generate new ant per timestep
-    # add_ant() # WIP function (below)
+    ants_on_grid = add_ant(ants_on_grid, simulation_grid.get_hill_loc(), p_straight)
 
     # ant movement + ant deposition to new position
     for ant in ants_on_grid:
@@ -141,7 +146,7 @@ def visualize_grid(ants_on_grid, simulation_grid):
     # showing grid pheromone concentration
     grid = simulation_grid.grid
     mp.figure()
-    mp.imshow(grid, cmap = "Greys", origin = "upper")
+    mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=60)
 
     mp.colorbar(label = "Pheromone Concentration (C(x,t))")
     mp.xlim(0, simulation_grid.get_size())
@@ -154,7 +159,7 @@ def visualize_grid(ants_on_grid, simulation_grid):
             direction = ant.get_direction()
 
             angle = direction_to_angle[direction]
-            mp.scatter(x, y, marker = (3, 0, angle), c="red", s=100)
+            mp.scatter(x, y, marker = (3, 0, angle), c="red", s=20)
 
     mp.show()
 
