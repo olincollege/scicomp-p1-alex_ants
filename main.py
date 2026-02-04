@@ -27,7 +27,7 @@ print(simulation_grid)
 ### run and print simulation ###
 print ("####### DURING SIMULATION #######")
 mp.figure()
-num_steps = 100
+num_steps = 1500
 for i in range (num_steps):
     print(i)
     ss.simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity)
@@ -44,7 +44,7 @@ for i in range (num_steps):
     ants_on_grid,
     simulation_grid,
     i,
-    pause=0.05
+    pause=0.01
     )
 mp.show()
 

@@ -30,7 +30,7 @@ class Ant:
         on_grid
     """
 
-    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.004), p_straight = 0.509):
+    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.002), p_straight = 0.511):
         self.x = x
         self.y = y
         self.B = B
@@ -187,7 +187,7 @@ class Ant:
             self.get_state(): String representing ant's state: explorer or follower"
         
         """
-        if np.random.randint(0, 256) < fidelity: # if the ant is staying a follower
+        if np.random.randint(0, 257) < fidelity: # if the ant is staying a follower, not inclusive of 257, 0-256
             self.set_ant_state('follower')
         else:
             self.set_ant_state('explorer')
