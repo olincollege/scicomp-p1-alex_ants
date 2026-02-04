@@ -29,7 +29,11 @@ class Grid:
         return self.size
     
     def get_pheromone_for_point(self, x, y):
-        """Gets pheromone value for one point on the grid."""
+        """Gets pheromone value for one point on the grid. Returns C = 0 if point off grid.
+        
+        """
+        if x < 0 or x >= self.size or y < 0 or y >= self.size:
+            return 0
         return self.grid[y, x]
     
     def set_pheromone_for_point(self, x, y, value):
