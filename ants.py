@@ -62,8 +62,11 @@ class Ant:
     # 'Set' functions
     def set_location(self, x_new, y_new):
         """Updates x and y location of ant to new x and y location."""
-        self.x = x_new
-        self.y = y_new
+        if isinstance(x_new, int) and isinstance(y_new, int):
+            self.x = x_new
+            self.y = y_new
+        else:
+            raise TypeError("Invalid data type; Ant location should be ints.")
 
     def set_ant_state(self, state_new):
         """Updates ant state to new state."""
