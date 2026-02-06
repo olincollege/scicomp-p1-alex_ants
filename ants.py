@@ -40,7 +40,7 @@ class Ant:
         self.on_grid = True
 
     def __repr__(self):
-        return f"ant | x-loc: {self.x}, y-loc: {self.y}, direction: {self.direction}, on grid: {self.on_grid}, probability forward movement: {self.p_straight}, turning kernel (B): {self.B}"
+        return f"ant | x-loc: {self.x}, y-loc: {self.y}, direction: {self.direction}, on grid: {self.on_grid}, state: {self.get_state()}, probability forward movement: {self.p_straight}, turning kernel (B): {self.B}"
     
     # 'Get' functions
     def get_direction(self):
@@ -138,6 +138,7 @@ class Ant:
             delta_turn = -1
         else: # set state as explorer, run update_direction again
             self.set_ant_state('explorer')
+            print("set state as explorer")
             delta_turn = self.explorer_turn()
 
         return delta_turn
@@ -189,8 +190,10 @@ class Ant:
         """
         if np.random.randint(0, 257) < fidelity: # if the ant is staying a follower, not inclusive of 257, 0-256
             self.set_ant_state('follower')
+            print("set state as follower")
         else:
             self.set_ant_state('explorer')
+            print("set state as explorer")
 
         return self.get_state()
 
