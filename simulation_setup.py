@@ -138,10 +138,10 @@ def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):    # W
 
 # Visualization function
 # needs to visualize both the C(x,t) values from the grid attribute of the Grid object and the ant location at the final timestep.
-def visualize_grid(ants_on_grid, simulation_grid):
-    """
-    Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
-    """
+# def visualize_grid(ants_on_grid, simulation_grid):
+#     """
+#     Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
+#     """
 
 #     # showing grid pheromone concentration
 #     grid = simulation_grid.grid
@@ -188,5 +188,41 @@ def visualize_grid(ants_on_grid, simulation_grid, step, pause=0.05):
             mp.scatter(x, y, marker=(3, 0, angle), c="red", s=20)
 
     mp.pause(pause)
+
+
+def total_L_value(ants_on_grid):
+    """
+    Returns number of exploratory (lost) ants at time t across the whole grid.
+
+    Args:
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+
+    Returns:
+        sum_L: Int representing the number of exploratory ants at 
+    """
+    sum_L = 0
+    for ant in ants_on_grid:
+        if ant.get_state()==('explorer'):
+            sum_L += sum_L
+    return sum_L
+
+def total_F_value(ants_on_grid):
+    """
+    Returns number of follower ants at time t across the whole grid.
+
+    Args:
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+
+    Returns:
+        sum_F
+    """
+    sum_F = 0
+    for ant in ants_on_grid:
+        if ant.get_state()==('follower'):
+            sum_F += sum_F
+    return sum_F
+
+
+
 
 
