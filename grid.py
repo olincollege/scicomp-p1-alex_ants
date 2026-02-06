@@ -30,7 +30,6 @@ class Grid:
     
     def get_hill_loc(self):
         """Gets hill location."""
-        print(self.hill_loc)
         return self.hill_loc
     
     def get_pheromone_for_point(self, x, y):
