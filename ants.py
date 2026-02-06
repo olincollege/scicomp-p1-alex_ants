@@ -67,7 +67,13 @@ class Ant:
 
     def set_ant_state(self, state_new):
         """Updates ant state to new state."""
-        self.state = state_new
+        if isinstance(state_new, str):
+            if(state_new == 'explorer' or state_new == 'follower'):
+                self.state = state_new
+            else:
+                raise ValueError("Invalid state; Ant state should be either 'explorer' or 'follower'.")
+        else:
+            raise TypeError("Invalid data type; Ant state should be a string.")
 
     def set_direction(self, direction_new):
         """set ant direction to new angle."""
