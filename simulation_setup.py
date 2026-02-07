@@ -5,19 +5,19 @@ import numpy as np
 import matplotlib.pyplot as mp
 import ants as a
 
-# Global Variables
-DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to current position for ant movement!!
+######## Global Variables ########
+DIRECTION_VECTORS = [  # stores (dx, dy) lattice grid movement relative to current position for ant movement!!
     (0, -1),  # 0: Up
     (1, -1),  # 1: Up-Right
-    (1, 0),   # 2: Right
-    (1, 1),   # 3: Down-Right
-    (0, 1),   # 4: Down
+    (1, 0),  # 2: Right
+    (1, 1),  # 3: Down-Right
+    (0, 1),  # 4: Down
     (-1, 1),  # 5: Down-Left
     (-1, 0),  # 6: Left
-    (-1, -1), # 7: Up-Left
+    (-1, -1),  # 7: Up-Left
 ]
-TAU = 8 # "units" of pheromone ants deposit to their location on the grid at each timestep.
-direction_to_angle = { # for the visualization function, converting a direction to the angle for ant marker ONLY
+TAU = 8  # "units" of pheromone ants deposit to their location on the grid at each timestep.
+direction_to_angle = {  # for the visualization function, converting a direction to the angle for ant marker ONLY
     0: 90,
     1: 45,
     2: 0,
@@ -36,17 +36,19 @@ def move_ant(ant, grid, fidelity):
 
     Args:
         ant: Ant object representing ant that needs to be moved for one step of the simulation.
-        grid: Grid object representing the grid on which the ant needs to move. 
-    
+        grid: Grid object representing the grid on which the ant needs to move.
+
     Returns:
         None.
     """
     if ant.is_on_grid():
-        ant_x, ant_y = ant.get_location() # gets current x/y location of ant
+        ant_x, ant_y = ant.get_location()  # gets current x/y location of ant
 
         # update direction
         ant.update_direction(grid, fidelity)
-        ant_direction = ant.get_direction() # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
+        ant_direction = (
+            ant.get_direction()
+        )  # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
 
         dx, dy = DIRECTION_VECTORS[ant_direction]
 
@@ -54,29 +56,35 @@ def move_ant(ant, grid, fidelity):
         new_y = ant_y + dy
 
         # If ant moving across grid boundary:
-        if new_x > (grid.get_size()-1) or new_x < 0:
-            ant.set_on_grid(False) # sets the ant as off the grid
+        if new_x > (grid.get_size() - 1) or new_x < 0:
+            ant.set_on_grid(False)  # sets the ant as off the grid
             return
-        if new_y > (grid.get_size()-1) or new_y < 0:
-            ant.set_on_grid(False) # sets the ant as off the grid
+        if new_y > (grid.get_size() - 1) or new_y < 0:
+            ant.set_on_grid(False)  # sets the ant as off the grid
             return
 
         ant.set_location(new_x, new_y)
-    
+
+
 def pheromone_deposition(ant, grid):
     """
-    Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once per ant every timestep. 
-    
+    Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once per ant every timestep.
+
     Args:
         ant: Ant object representing ant that needs to be moved for one step of the simulation.
         grid: Grid object representing the grid on which the ant needs to move.
-    
+
     Returns:
         None.
     """
     if ant.is_on_grid() == True:
         x_deposit, y_deposit = ant.get_location()
-        grid.set_pheromone_for_point(x_deposit, y_deposit, grid.get_pheromone_for_point(x_deposit, y_deposit) + TAU)
+        grid.set_pheromone_for_point(
+            x_deposit,
+            y_deposit,
+            grid.get_pheromone_for_point(x_deposit, y_deposit) + TAU,
+        )
+
 
 def pheromone_evaporation(grid):
     """
@@ -84,17 +92,25 @@ def pheromone_evaporation(grid):
 
     Args:
         grid: Grid object representing the grid on which simulation is occuring.
+
     Returns:
         None.
     """
     for point_x in range(grid.size):
         for point_y in range(grid.size):
-            new_pheromone_value = grid.get_pheromone_for_point(point_x, point_y) - 1
+            new_pheromone_value = (
+                grid.get_pheromone_for_point(point_x, point_y) - 1
+            )
 
-            if new_pheromone_value <= 0: #If new proposed value is 0 or negative, set the pheromone concentration value to 0
+            if (
+                new_pheromone_value <= 0
+            ):  # If new proposed value is 0 or negative, set the pheromone concentration value to 0
                 grid.set_pheromone_for_point(point_x, point_y, 0)
             else:
-                grid.set_pheromone_for_point(point_x, point_y, new_pheromone_value)
+                grid.set_pheromone_for_point(
+                    point_x, point_y, new_pheromone_value
+                )
+
 
 def add_ant(ants_on_grid, hill_loc, p_straight):
     """
@@ -102,24 +118,33 @@ def add_ant(ants_on_grid, hill_loc, p_straight):
 
     Args:
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        hill_loc: Tuple with ant hill location, default (128, 128).
+        p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.509; decimal percentage to get to 1 after summing all B kernels.
+        on_grid
+    
+    Returns:
+        ants_on_grid: ants_on_grid, but updated with another ant.
+
     """
-    ants_on_grid.append(a.Ant(x = hill_loc, y = hill_loc, p_straight=p_straight))
+    ants_on_grid.append(a.Ant(x=hill_loc, y=hill_loc, p_straight=p_straight))
     return ants_on_grid
 
 
-
 ######## Wrapper simulation function - all functions for one step ########
-def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):    # WIP!!! Right now only working with one ant!!!!! 
+def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):
     """
     Wrapper function for all things that need to happen in a simulation step.
 
     Args:
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
         simulation_grid: Grid object representing lattice ants are being simulated on.
+        p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.509; decimal percentage to get to 1 after summing all B kernels.
+        on_grid
         fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
 
     Returns:
         None.
+
     """
     # generate new ant per timestep
     ants_on_grid = add_ant(ants_on_grid, simulation_grid.get_hill_loc(), p_straight)
@@ -129,18 +154,26 @@ def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):    # W
         if ant.is_on_grid() == True:
             pheromone_deposition(ant, simulation_grid)
             move_ant(ant, simulation_grid, fidelity)
-            if ant.is_on_grid() == False: # if ant moves off grid, remove ant
+            if ant.is_on_grid() == False:  # if ant moves off grid, remove ant
                 ants_on_grid.remove(ant)
-        else: # if ant somehow off grid but still in ants_on_grid, remove ant
+        else:  # if ant somehow off grid but still in ants_on_grid, remove ant
             ants_on_grid.remove(ant)
     # global grid evaporation
     pheromone_evaporation(simulation_grid)
 
-# Visualization function
-# needs to visualize both the C(x,t) values from the grid attribute of the Grid object and the ant location at the final timestep.
+
+######## Visualization functions ########
 def visualize_grid(ants_on_grid, simulation_grid):
     """
     Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
+
+    Args:
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        simulation_grid: Grid object representing lattice ants are being simulated on.
+
+    Returns:
+        None.
+
     """
 
     # showing grid pheromone concentration
@@ -148,24 +181,34 @@ def visualize_grid(ants_on_grid, simulation_grid):
     mp.figure()
     mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=60)
 
-    mp.colorbar(label = "Pheromone Concentration (C(x,t))")
+    mp.colorbar(label="Pheromone Concentration (C(x,t))")
     mp.xlim(0, simulation_grid.get_size())
-    mp.ylim(simulation_grid.get_size(), 0)  
+    mp.ylim(simulation_grid.get_size(), 0)
 
-    # showing ant 
+    # showing ant
     for ant in ants_on_grid:
         if ant.is_on_grid():
             x, y = ant.get_location()
             direction = ant.get_direction()
 
             angle = direction_to_angle[direction]
-            mp.scatter(x, y, marker = (3, 0, angle), c="red", s=20)
+            mp.scatter(x, y, marker=(3, 0, angle), c="red", s=20)
 
     mp.show()
 
+
 def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
     """
-    Live visualization of grid + ants.
+    Show live visualization of grid + ants.
+
+    Args:
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        simulation_grid: Grid object representing lattice ants are being simulated on.
+        step: Int representing the iteration number.
+        pause: Number of seconds for the simulation to pause.
+
+    Returns:
+        None.
     """
     mp.clf()
 
@@ -190,6 +233,7 @@ def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
     mp.pause(pause)
 
 
+######## Output Parameters ########
 def total_L_value(ants_on_grid):
     """
     Returns number of exploratory (lost) ants at time t across the whole grid.
@@ -198,13 +242,15 @@ def total_L_value(ants_on_grid):
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
 
     Returns:
-        sum_L: Int representing the number of exploratory ants at 
+        sum_L: Int representing the number of exploratory ants at time t.
+    
     """
     sum_L = 0
     for ant in ants_on_grid:
-        if ant.get_state() =='explorer':
+        if ant.get_state() == "explorer":
             sum_L += 1
     return sum_L
+
 
 def total_F_value(ants_on_grid):
     """
@@ -214,15 +260,11 @@ def total_F_value(ants_on_grid):
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
 
     Returns:
-        sum_F
+        sum_F: Int representing the number of follower ants at time t.
+
     """
     sum_F = 0
     for ant in ants_on_grid:
-        if ant.get_state()=='follower':
+        if ant.get_state() == "follower":
             sum_F += 1
     return sum_F
-
-
-
-
-
