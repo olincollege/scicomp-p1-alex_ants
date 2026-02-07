@@ -2,8 +2,8 @@
 
 # imports
 import pytest
-import grid as g
 import numpy as np
+import grid as g
 
 ######## initialize ########
 
@@ -28,13 +28,16 @@ def test_custom_size_initialization():
 def test_custom_size_initialization_odd():
     """Check grid initialization with custom size that is not an even number."""
 
-    with pytest.raises(ValueError, match="Invalid size input; size input must be even."):
-        grid = g.Grid(size=101)
+    with pytest.raises(ValueError, match="Invalid size input; size input must"\
+    " be even."):
+        g.Grid(size=101)
+
 
 def test_custom_size_initialization_invalid_type():
     """Check grid initialization with wrong type input for size."""
-    with pytest.raises(TypeError, match="Invalid input type; size input must be an int."):
-        grid = g.Grid(size=101)
+    with pytest.raises(TypeError, match="Invalid input type; size input must"\
+    " be an int."):
+        g.Grid(size=101)
 
 ######## get function tests ########
 
@@ -81,7 +84,8 @@ def test_get_pheromone_out_of_bounds_large():
 ######## set_pheromone_for_point tests ########
 
 def test_set_pheromone_for_point():
-    """Checks that set_pheromone_for_point function sets the right pheromone at the correct spot."""
+    """Checks that set_pheromone_for_point function sets the right pheromone at
+     the correct spot."""
     grid = g.Grid(size = 30)
 
     grid.set_pheromone_for_point(2, 3, 47)
@@ -116,4 +120,3 @@ def test_set_then_get():
     value = grid.get_pheromone_for_point(5, 6)
 
     assert value == 8
-
