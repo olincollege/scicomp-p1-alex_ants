@@ -15,10 +15,16 @@ class Grid:
         grid: Numpy 2D array of points.
     """
 
-    def __init__(self, size=256, hill_loc=128):
-        self.size = size
-        self.hill_loc = hill_loc
-        self.grid = np.zeros((size, size))
+    def __init__(self, size=256):
+        if isinstance(size, int):
+            if size % 2 == 0:
+                self.size = size
+                self.hill_loc = size/2
+                self.grid = np.zeros((size, size))
+            else:
+                raise ValueError("Invalid size input; size input must be even.")
+        else:
+            raise TypeError("Invalid input type; size input must be an int.")
 
     def __repr__(self):
         return (
