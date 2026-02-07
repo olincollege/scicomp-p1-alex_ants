@@ -2,6 +2,8 @@
 
 This repository holds the code for the first project in ENGR3560: Scientific Computing. The goal is to replicate the cellular automata model used to simulate the formation of trails of foraging ants, as detailed in the paper 'Modelling the Formation of Trail Networks by Foraging Ants' (Watmough, Edelstein-Keshet), 1995. The specific deliverables are recreations of Figure 3 (a, b, c) from the paper.
 
+This is implemented in Python. Individual agents (ants) move on a Numpy Array (grid) and deposit pheromone as they move. Other ants can react to the pheromone levels and change their movement behavior from exploratory to following (a trail). The grid (and the ants) are visualized using MatPlotLib.
+
 ## Requirements
 
 The `requirements.txt` file contains the required package imports:
