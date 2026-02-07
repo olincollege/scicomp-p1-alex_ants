@@ -29,7 +29,8 @@ print ("####### DURING SIMULATION #######")
 mp.figure()
 num_steps = 1500
 for i in range (num_steps):
-    print(i)
+    print(f"Step: {i}, num ants on grid: {len(ants_on_grid)}")
+    # print(i)
     ss.simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity)
 
     # sanity checking for pheromone concentration where ant disappears off grid
@@ -40,7 +41,7 @@ for i in range (num_steps):
     ##### SANITY CHECK #####
     # print(ant)
     # ss.visualize_grid(ants_on_grid, simulation_grid)
-    ss.visualize_grid(
+    ss.visualize_grid_live(
     ants_on_grid,
     simulation_grid,
     i,
@@ -53,4 +54,5 @@ print ("####### POST SIMULATION #######")
 print(ants_on_grid)
 print(ant)
 print(simulation_grid.grid)
-# ss.visualize_grid(ants_on_grid, simulation_grid)
+print(f"Follower ants: {ss.total_F_value(ants_on_grid)}, Explorer ants: {ss.total_L_value(ants_on_grid)}")
+ss.visualize_grid(ants_on_grid, simulation_grid)

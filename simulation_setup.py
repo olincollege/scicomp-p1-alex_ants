@@ -1,4 +1,4 @@
-# Contains code to set up grid
+""" Contains code to set up grid """
 
 # imports
 import numpy as np
@@ -138,32 +138,32 @@ def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):    # W
 
 # Visualization function
 # needs to visualize both the C(x,t) values from the grid attribute of the Grid object and the ant location at the final timestep.
-# def visualize_grid(ants_on_grid, simulation_grid):
-#     """
-#     Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
-#     """
+def visualize_grid(ants_on_grid, simulation_grid):
+    """
+    Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
+    """
 
-#     # showing grid pheromone concentration
-#     grid = simulation_grid.grid
-#     mp.figure()
-#     mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=60)
+    # showing grid pheromone concentration
+    grid = simulation_grid.grid
+    mp.figure()
+    mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=60)
 
-#     mp.colorbar(label = "Pheromone Concentration (C(x,t))")
-#     mp.xlim(0, simulation_grid.get_size())
-#     mp.ylim(simulation_grid.get_size(), 0)  
+    mp.colorbar(label = "Pheromone Concentration (C(x,t))")
+    mp.xlim(0, simulation_grid.get_size())
+    mp.ylim(simulation_grid.get_size(), 0)  
 
-#     # showing ant 
-#     for ant in ants_on_grid:
-#         if ant.is_on_grid():
-#             x, y = ant.get_location()
-#             direction = ant.get_direction()
+    # showing ant 
+    for ant in ants_on_grid:
+        if ant.is_on_grid():
+            x, y = ant.get_location()
+            direction = ant.get_direction()
 
-#             angle = direction_to_angle[direction]
-#             mp.scatter(x, y, marker = (3, 0, angle), c="red", s=20)
+            angle = direction_to_angle[direction]
+            mp.scatter(x, y, marker = (3, 0, angle), c="red", s=20)
 
-#     mp.show()
+    mp.show()
 
-def visualize_grid(ants_on_grid, simulation_grid, step, pause=0.05):
+def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
     """
     Live visualization of grid + ants.
     """
@@ -172,7 +172,7 @@ def visualize_grid(ants_on_grid, simulation_grid, step, pause=0.05):
     # showing grid pheromone concentration
     grid = simulation_grid.grid
 
-    mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=60)
+    mp.imshow(grid, cmap="Greys", origin="upper", vmin=0, vmax=84)
     mp.colorbar(label="Pheromone Concentration (C(x,t))")
     mp.xlim(0, simulation_grid.get_size())
     mp.ylim(simulation_grid.get_size(), 0)
@@ -202,8 +202,8 @@ def total_L_value(ants_on_grid):
     """
     sum_L = 0
     for ant in ants_on_grid:
-        if ant.get_state()==('explorer'):
-            sum_L += sum_L
+        if ant.get_state() =='explorer':
+            sum_L += 1
     return sum_L
 
 def total_F_value(ants_on_grid):
@@ -218,8 +218,8 @@ def total_F_value(ants_on_grid):
     """
     sum_F = 0
     for ant in ants_on_grid:
-        if ant.get_state()==('follower'):
-            sum_F += sum_F
+        if ant.get_state()=='follower':
+            sum_F += 1
     return sum_F
 
 

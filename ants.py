@@ -1,4 +1,4 @@
-# File containing ant class, move one grid space per turn.
+""" File containing ant class, move one grid space per turn. """
 
 # imports
 import numpy as np
@@ -30,7 +30,7 @@ class Ant:
         on_grid
     """
 
-    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.002), p_straight = 0.511):
+    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.004), p_straight = 0.581):
         self.x = x
         self.y = y
         self.B = B
@@ -215,7 +215,7 @@ def angle_of_turn(B):
     Function generates a new turn angle with B kernel for an explorer ant's change in direction.
 
     Args:
-        B: Tuple representing the turning kernels (B1, B2, B3, B4). Default (0.25, 0.25, 0.25, 0.25).
+        B: Tuple representing the turning kernels (B1, B2, B3, B4).
     Returns:
         angle_amount * turn_direction: Int of value +/- 1, 2, 3, 4 representing the number of 45 degree units to turn, and in which direction.
     """

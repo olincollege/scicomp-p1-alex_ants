@@ -1,4 +1,4 @@
-# File containing Grid class, creates the grid for the simulation.
+""" File containing Grid class, creates the grid for the simulation. """
 
 # imports
 import numpy as np
