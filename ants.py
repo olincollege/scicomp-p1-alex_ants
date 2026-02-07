@@ -150,7 +150,6 @@ class Ant:
             delta_turn = -1
         else: # set state as explorer, run update_direction again
             self.set_ant_state('explorer')
-            print("set state as explorer")
             delta_turn = self.explorer_turn()
 
         return delta_turn
@@ -202,10 +201,8 @@ class Ant:
         """
         if np.random.randint(0, 257) < fidelity: # if the ant is staying a follower, not inclusive of 257, 0-256
             self.set_ant_state('follower')
-            print("set state as follower")
         else:
             self.set_ant_state('explorer')
-            print("set state as explorer")
 
         return self.get_state()
 
