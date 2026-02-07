@@ -5,30 +5,33 @@ This repository holds the code for the first project in ENGR3560: Scientific Com
 ## Requirements
 
 The `requirements.txt` file contains the required package imports:
-- NumPy
-- MatPlotLib
+- matplotlib~=3.7.2
+- numpy~=1.24.3
+- pytest~=7.4.0
 
 ## How to Use
 1. Clone the repository:
-    ```
-    git clone https://github.com/olincollege/scicomp-p1-alex_ants.git
-    cd scicomp-p1-alex_ants/
-    ```
+```
+git clone https://github.com/olincollege/scicomp-p1-alex_ants.git
+cd scicomp-p1-alex_ants/
+```
+
 2. Install dependencies:
-    ```
-    pip install -r requirements.txt
-    ```
+```
+pip install -r requirements.txt
+```
+
 3. Run the simulation:
-    ```
-    python main.py
-    ```
+```
+python main.py
+```
 
 ## File Structure
-ants.py
-grid.py
-simulation_setup.py
-ants_testing.py
-main.py
+ants.py - Contains Ant class and all helper functions, including explorer/follower decision making.
+grid.py - Contains Grid class.
+simulation_setup.py - Contains functions relevant to each simulation step.
+ants_testing.py - Tests relevant functions from ants.py.
+main.py - Main python file from which to run the code.
 
 
 ## Sources
