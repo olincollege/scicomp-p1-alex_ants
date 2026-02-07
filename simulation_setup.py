@@ -17,17 +17,30 @@ DIRECTION_VECTORS = [  # stores (dx, dy) lattice grid movement relative to curre
     (-1, -1),  # 7: Up-Left
 ]
 TAU = 8  # "units" of pheromone ants deposit to their location on the grid at each timestep.
-direction_to_angle = {  # for the visualization function, converting a direction to the angle for ant marker ONLY
-    0: 90,
-    1: 45,
-    2: 0,
-    3: -45,
-    4: -90,
-    5: -135,
-    6: 180,
-    7: 135,
-}
 
+# direction_to_angle = {  # for the visualization function, converting a direction to the angle for ant marker ONLY
+#     0: 90,
+#     1: 45,
+#     2: 0,
+#     3: -45,
+#     4: -90,
+#     5: -135,
+#     6: 180,
+#     7: 135,
+
+    
+# }
+
+direction_to_angle = {
+    0:   0,     # Up
+    1:  -45,    # Up-right
+    2:  -90,    # Right
+    3: -135,    # Down-right
+    4:  180,    # Down
+    5:  135,    # Down-left
+    6:   90,    # Left
+    7:   45,    # Up-left
+}
 
 ######## Simulation step functions ########
 def move_ant(ant, grid, fidelity):

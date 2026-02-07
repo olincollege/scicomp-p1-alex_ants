@@ -135,13 +135,13 @@ class Ant:
         """
         ant_x, ant_y = self.get_location()
         # check the values of 7 - 0 - 1, so grid values to left, forward, and right
-        forward_x, forward_y = DIRECTION_VECTORS[self.direction] # grid space 0
-        left_x, left_y = DIRECTION_VECTORS[(self.direction - 1) % 8] # grid space 7, represented as -1
-        right_x, right_y = DIRECTION_VECTORS[(self.direction + 1) % 8] # grid space 1, represented as 1
+        forward_dx, forward_dy = DIRECTION_VECTORS[self.direction]
+        left_dx, left_dy = DIRECTION_VECTORS[(self.direction - 1) % 8] # grid space 7, represented as -1
+        right_dx, right_dy = DIRECTION_VECTORS[(self.direction + 1) % 8] # grid space 1, represented as 1
 
-        C_0 = grid.get_pheromone_for_point(ant_x + forward_x, ant_y + forward_y)
-        C_1 = grid.get_pheromone_for_point(ant_x + right_x, ant_y + right_y)
-        C_7 = grid.get_pheromone_for_point(ant_x + left_x, ant_y + left_y)
+        C_0 = grid.get_pheromone_for_point(ant_x + forward_dx, ant_y + forward_dy)
+        C_1 = grid.get_pheromone_for_point(ant_x + right_dx, ant_y + right_dy)
+        C_7 = grid.get_pheromone_for_point(ant_x + left_dx, ant_y + left_dy)
         if C_0 > C_1 and C_0 > C_7: # if C(0) is > C(7) and C(1): # if trail moves forward
             delta_turn = 0
         elif C_1 > C_7: # if C(1) > C(7): # if left concentration is greater than right C, move left
@@ -174,6 +174,7 @@ class Ant:
         
         Returns:
             None
+
         """
         # determine if new state is explorer or follower
         new_state = self.determine_state(fidelity)
@@ -188,7 +189,6 @@ class Ant:
         self.set_direction(new_direction)
 
 
-    # State determination function placeholder - will implement when multiple ants/second round of simulation
     def determine_state(self, fidelity):
         """
         Determines whether or not ant will be follower or explorer based on fidelity.
@@ -220,6 +220,7 @@ def angle_of_turn(B):
         B: Tuple representing the turning kernels (B1, B2, B3, B4).
     Returns:
         angle_amount * turn_direction: Int of value +/- 1, 2, 3, 4 representing the number of 45 degree units to turn, and in which direction.
+
     """
 
     # use turning kernel B to randomize how many 45 degree directions the ant turns
