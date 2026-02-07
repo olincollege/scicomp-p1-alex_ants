@@ -12,8 +12,9 @@ def test_set_ant_state_explorer():
     ant = a.Ant()
 
     # testing explorer
-    ant.set_ant_state('explorer')
-    assert ant.get_state() == 'explorer'
+    ant.set_ant_state("explorer")
+    assert ant.get_state() == "explorer"
+
 
 def test_set_ant_state_follower():
     """
@@ -22,8 +23,9 @@ def test_set_ant_state_follower():
     ant = a.Ant()
 
     # testing follower
-    ant.set_ant_state('follower')
-    assert ant.get_state() == 'follower'
+    ant.set_ant_state("follower")
+    assert ant.get_state() == "follower"
+
 
 def test_set_ant_state_invalid():
     """
@@ -32,12 +34,19 @@ def test_set_ant_state_invalid():
     ant = a.Ant()
 
     # testing invalid state setting
-    with pytest.raises(ValueError, match="Invalid state; Ant state should be either 'explorer' or 'follower'."):
-        ant.set_ant_state('blah')
+    with pytest.raises(
+        ValueError,
+        match=(
+            "Invalid state; Ant state should be either 'explorer' or"
+            " 'follower'."
+        ),
+    ):
+        ant.set_ant_state("blah")
 
-    with pytest.raises(TypeError, match="Invalid data type; Ant state should be a string."):
+    with pytest.raises(
+        TypeError, match="Invalid data type; Ant state should be a string."
+    ):
         ant.set_ant_state(30)
-
 
 
 ### set_location ###
@@ -51,6 +60,7 @@ def test_set_location_valid():
     ant.set_location(10, 10)
     assert ant.get_location() == 10, 10
 
+
 def test_set_location_both_invalid():
     """
     Check that set_location functions only sets x and y integer positions.
@@ -58,8 +68,11 @@ def test_set_location_both_invalid():
     ant = a.Ant()
 
     # both x and y invalid
-    with pytest.raises(TypeError, match="Invalid data type; Ant location should be ints."):
+    with pytest.raises(
+        TypeError, match="Invalid data type; Ant location should be ints."
+    ):
         ant.set_location(1.0, "hello")
+
 
 def test_set_location_x_invalid():
     """
@@ -68,8 +81,11 @@ def test_set_location_x_invalid():
     ant = a.Ant()
 
     # both x and y invalid
-    with pytest.raises(TypeError, match="Invalid data type; Ant location should be ints."):
+    with pytest.raises(
+        TypeError, match="Invalid data type; Ant location should be ints."
+    ):
         ant.set_location(3.5, 10)
+
 
 def test_set_location_y_invalid():
     """
@@ -78,7 +94,7 @@ def test_set_location_y_invalid():
     ant = a.Ant()
 
     # both x and y invalid
-    with pytest.raises(TypeError, match="Invalid data type; Ant location should be ints."):
+    with pytest.raises(
+        TypeError, match="Invalid data type; Ant location should be ints."
+    ):
         ant.set_location(10, "woah")
-    
-

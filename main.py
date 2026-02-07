@@ -8,15 +8,15 @@ import matplotlib.pyplot as mp
 
 
 # Simulation 1
-fidelity = 255 # according to Fig 3a from the paper
+fidelity = 255  # according to Fig 3a from the paper
 grid_size = 256
-hill_loc = int(grid_size/2)
+hill_loc = int(grid_size / 2)
 simulation_grid = g.Grid(grid_size, hill_loc)
-ants_on_grid = [] # will store all ant objects on the grid
+ants_on_grid = []  # will store all ant objects on the grid
 
 # First ant
-p_straight = 0.5 # needed for simulation steps!
-ant = a.Ant(x = hill_loc, y = hill_loc, p_straight = p_straight)
+p_straight = 0.5  # needed for simulation steps!
+ant = a.Ant(x=hill_loc, y=hill_loc, p_straight=p_straight)
 ants_on_grid.append(ant)
 
 ### for sanity checking ###
@@ -25,10 +25,10 @@ print(simulation_grid)
 # ss.visualize_grid(ants_on_grid, simulation_grid)
 
 ### run and print simulation ###
-print ("####### DURING SIMULATION #######")
+print("####### DURING SIMULATION #######")
 mp.figure()
 num_steps = 1500
-for i in range (num_steps):
+for i in range(num_steps):
     print(f"Step: {i}, num ants on grid: {len(ants_on_grid)}")
     # print(i)
     ss.simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity)
@@ -41,18 +41,16 @@ for i in range (num_steps):
     ##### SANITY CHECK #####
     # print(ant)
     # ss.visualize_grid(ants_on_grid, simulation_grid)
-    ss.visualize_grid_live(
-    ants_on_grid,
-    simulation_grid,
-    i,
-    pause=0.01
-    )
+    ss.visualize_grid_live(ants_on_grid, simulation_grid, i, pause=0.01)
 mp.show()
 
 ### sanity checking simulation run ###
-print ("####### POST SIMULATION #######")
+print("####### POST SIMULATION #######")
 print(ants_on_grid)
 print(ant)
 print(simulation_grid.grid)
-print(f"Follower ants: {ss.total_F_value(ants_on_grid)}, Explorer ants: {ss.total_L_value(ants_on_grid)}")
+print(
+    f"Follower ants: {ss.total_F_value(ants_on_grid)}, Explorer ants:"
+    f" {ss.total_L_value(ants_on_grid)}"
+)
 ss.visualize_grid(ants_on_grid, simulation_grid)
