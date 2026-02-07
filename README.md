@@ -28,9 +28,13 @@ python main.py
 
 ## File Structure
 ants.py - Contains Ant class and all helper functions, including explorer/follower decision making.
+
 grid.py - Contains Grid class.
+
 simulation_setup.py - Contains functions relevant to each simulation step.
+
 ants_testing.py - Tests relevant functions from ants.py.
+
 main.py - Main python file from which to run the code.
 
 
