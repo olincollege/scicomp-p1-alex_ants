@@ -37,6 +37,9 @@ ants_testing.py - Tests relevant functions from ants.py.
 
 main.py - Main python file from which to run the code.
 
+## Author
+The creator of this repository is Alex Mineeva (amineeva).
+
 
 ## Sources
 James Watmough, Leah Edelstein-Keshet,
