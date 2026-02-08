@@ -12,11 +12,15 @@ from constants import DIRECTION_TO_ANGLE
 ######## Static Visualization at a timestep ########
 def visualize_grid(ants_on_grid:list[a.Ant], simulation_grid:g.Grid)->None:
     """
-    Function visualizes the grid and ants at one timestep. The grid shows pheromone concentrations (white - 0, grey - some, black - high), shows ant dots.
+    Function visualizes the grid and ants at one timestep. The grid shows
+      pheromone concentrations (white - 0, grey - some, black - high), shows
+      ant dots.
 
     Args:
-        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
-        simulation_grid: Grid object representing lattice ants are being simulated on.
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain
+          only ants that are on the grid.
+        simulation_grid: Grid object representing lattice ants are being
+          simulated on.
 
     Returns:
         None.
@@ -36,8 +40,10 @@ def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
     Show live visualization of grid + ants.
 
     Args:
-        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
-        simulation_grid: Grid object representing lattice ants are being simulated on.
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain
+          only ants that are on the grid.
+        simulation_grid: Grid object representing lattice ants are being
+          simulated on.
         step: Int representing the iteration number.
         pause: Number of seconds for the simulation to pause.
 
@@ -49,7 +55,7 @@ def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
     # showing grid pheromone concentration
     _plot_grid(simulation_grid, vmax=84)
     _plot_ants(ants_on_grid)
-    
+
     mp.title(f"Step {step}")
 
     mp.pause(pause)
@@ -62,7 +68,8 @@ def _plot_grid(grid:g.Grid, vmax:int)->None:
 
     Args:
         grid: Grid object representing lattice ants are being simulated on.
-        vmax: Int representing max pheromone concentration value to show on plot.
+        vmax: Int representing max pheromone concentration value to show on
+          plot.
 
     Returns:
         None.
@@ -79,7 +86,8 @@ def _plot_ants(ants_on_grid:list[a.Ant])->None:
     Function plot ants on grid.
     
     Args:
-        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain
+          only ants that are on the grid.
     
     Returns:
         None
