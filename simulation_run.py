@@ -21,16 +21,16 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, ver
         live_vis: Boolean to show live visualization, nice to see steps dynamically but takes a lot fo time. Default False; off.
 
     Returns:
+        None
 
     """
     ######## Pre-simulation ########
-
-    # setting up list to store ants on grid and the grid used for the simulation
+    # initializing grid and list to store ant population
     ants_on_grid = []  # will store all ant objects on the grid
     simulation_grid = g.Grid(grid_size)
 
 
-    ## for sanity checking ###
+    # optional debugging output
     if verbose:
         print(ants_on_grid)
         print(simulation_grid)
@@ -38,6 +38,7 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, ver
 
 
     ######## During simulation ########
+    # Main simulation loop
     print("####### DURING SIMULATION #######")
     if live_vis:
         mp.figure()
@@ -53,14 +54,17 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, ver
 
 
     ######## Post-simulation ########
+    # final statistics and visualize results
     print("####### POST SIMULATION #######")
     if verbose:
         print(ants_on_grid)
         print(simulation_grid.grid)
 
-    # deliver outputs F and L, visualization of grid at final timestep
+    # final follower and explorer ant counts
     print(
         f"Follower ants: {ss.total_F_value(ants_on_grid)}, Explorer ants:"
         f" {ss.total_L_value(ants_on_grid)}"
     )
+
+    # Visualize matplotlib of grid at final timestep
     v.visualize_grid(ants_on_grid, simulation_grid)
