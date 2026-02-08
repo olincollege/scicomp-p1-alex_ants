@@ -16,20 +16,6 @@ DIRECTION_VECTORS = [  # stores (dx, dy) lattice grid movement relative to curre
     (-1, 0),  # 6: Left
     (-1, -1),  # 7: Up-Left
 ]
-TAU = 8  # "units" of pheromone ants deposit to their location on the grid at each timestep.
-
-# direction_to_angle = {  # for the visualization function, converting a direction to the angle for ant marker ONLY
-#     0: 90,
-#     1: 45,
-#     2: 0,
-#     3: -45,
-#     4: -90,
-#     5: -135,
-#     6: 180,
-#     7: 135,
-
-    
-# }
 
 direction_to_angle = {
     0:   0,     # Up
@@ -53,6 +39,7 @@ def move_ant(ant, grid, fidelity):
 
     Returns:
         None.
+
     """
     if ant.is_on_grid():
         ant_x, ant_y = ant.get_location()  # gets current x/y location of ant
@@ -79,23 +66,25 @@ def move_ant(ant, grid, fidelity):
         ant.set_location(new_x, new_y)
 
 
-def pheromone_deposition(ant, grid):
+def pheromone_deposition(ant, grid, tau):
     """
     Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once per ant every timestep.
 
     Args:
         ant: Ant object representing ant that needs to be moved for one step of the simulation.
         grid: Grid object representing the grid on which the ant needs to move.
+        tau: Int representing "units" of pheromone ants deposit to their location on the grid at each timestep.
 
     Returns:
         None.
+
     """
     if ant.is_on_grid() == True:
         x_deposit, y_deposit = ant.get_location()
         grid.set_pheromone_for_point(
             x_deposit,
             y_deposit,
-            grid.get_pheromone_for_point(x_deposit, y_deposit) + TAU,
+            grid.get_pheromone_for_point(x_deposit, y_deposit) + tau,
         )
 
 
@@ -125,34 +114,30 @@ def pheromone_evaporation(grid):
                 )
 
 
-def add_ant(ants_on_grid, hill_loc, p_straight):
+def add_ant(ants_on_grid, hill_loc):
     """
     Function that adds an ant to the grid. Meant to be run once per timestep.
 
     Args:
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
         hill_loc: Tuple with ant hill location, default (128, 128).
-        p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.509; decimal percentage to get to 1 after summing all B kernels.
-        on_grid
     
     Returns:
         ants_on_grid: ants_on_grid, but updated with another ant.
 
     """
-    ants_on_grid.append(a.Ant(x=hill_loc, y=hill_loc, p_straight=p_straight))
+    ants_on_grid.append(a.Ant(x=hill_loc, y=hill_loc))
     return ants_on_grid
 
 
 ######## Wrapper simulation function - all functions for one step ########
-def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):
+def simulation_step(ants_on_grid, simulation_grid, fidelity, tau):
     """
     Wrapper function for all things that need to happen in a simulation step.
 
     Args:
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
         simulation_grid: Grid object representing lattice ants are being simulated on.
-        p_straight: Float between 0 and 1 representing the probability that an exploratory ant will go forward rather than turn. Default is 0.509; decimal percentage to get to 1 after summing all B kernels.
-        on_grid
         fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
 
     Returns:
@@ -160,12 +145,12 @@ def simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity):
 
     """
     # generate new ant per timestep
-    ants_on_grid = add_ant(ants_on_grid, simulation_grid.get_hill_loc(), p_straight)
+    ants_on_grid = add_ant(ants_on_grid, simulation_grid.get_hill_loc())
 
     # ant movement + ant deposition to new position
     for ant in ants_on_grid:
         if ant.is_on_grid() == True:
-            pheromone_deposition(ant, simulation_grid)
+            pheromone_deposition(ant, simulation_grid, tau)
             move_ant(ant, simulation_grid, fidelity)
             if ant.is_on_grid() == False:  # if ant moves off grid, remove ant
                 ants_on_grid.remove(ant)

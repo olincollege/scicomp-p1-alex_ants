@@ -9,15 +9,11 @@ import matplotlib.pyplot as mp
 
 # Simulation 1
 fidelity = 255  # according to Fig 3a from the paper
+tau = 12 # according to Fig 3a from the paper
 grid_size = 256
 hill_loc = int(grid_size / 2)
 simulation_grid = g.Grid(grid_size, hill_loc)
 ants_on_grid = []  # will store all ant objects on the grid
-
-# First ant
-p_straight = 0.5  # needed for simulation steps!
-ant = a.Ant(x=hill_loc, y=hill_loc, p_straight=p_straight)
-ants_on_grid.append(ant)
 
 ### for sanity checking ###
 print(ants_on_grid)
@@ -31,7 +27,7 @@ num_steps = 1500
 for i in range(num_steps):
     print(f"Step: {i}, num ants on grid: {len(ants_on_grid)}")
     # print(i)
-    ss.simulation_step(ants_on_grid, simulation_grid, p_straight, fidelity)
+    ss.simulation_step(ants_on_grid, simulation_grid, fidelity, tau)
 
     # sanity checking for pheromone concentration where ant disappears off grid
     # print(ant.is_on_grid)
