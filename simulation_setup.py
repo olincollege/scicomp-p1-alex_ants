@@ -1,4 +1,5 @@
-""" Contains simulation step function for ant trial modeling: movement, pheromones, population updates. """
+""" Contains simulation step function for ant trial modeling:
+ movement, pheromones, population updates. """
 
 # imports
 import ants as a
@@ -14,9 +15,11 @@ def move_ant(ant:a.Ant, grid:g.Grid, fidelity:int)->None:
     Function moves the ant one lattice grid in the ant's chosen direction.
 
     Args:
-        ant: Ant object representing ant that needs to be moved for one step of the simulation.
+        ant: Ant object representing ant that needs to be moved for one step of
+          the simulation.
         grid: Grid object representing the grid on which the ant needs to move.
-        fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
+        fidelity: Int representing the probability of an ant to keep following
+          a trail. From paper 3a: 255, 3b: 251, 3c: 247
 
     Returns:
         None.
@@ -27,7 +30,8 @@ def move_ant(ant:a.Ant, grid:g.Grid, fidelity:int)->None:
 
         # update direction
         ant.update_direction(grid, fidelity)
-        ant_direction = (ant.get_direction())  # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
+        # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
+        ant_direction = ant.get_direction()
 
         dx, dy = DIRECTION_VECTORS[ant_direction]
 
@@ -45,12 +49,15 @@ def move_ant(ant:a.Ant, grid:g.Grid, fidelity:int)->None:
 ######## Pheromone Functions ########
 def deposit_pheromone(ant:a.Ant, grid:g.Grid, tau:int)->None:
     """
-    Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once per ant every timestep.
+    Function that places a 'tau' amount of pheromone at the location of each
+      ant. Meant to be run once per ant every timestep.
 
     Args:
-        ant: Ant object representing ant that needs to be moved for one step of the simulation.
+        ant: Ant object representing ant that needs to be moved for one step of
+          the simulation.
         grid: Grid object representing the grid on which the ant needs to move.
-        tau: Int representing "units" of pheromone ants deposit to their location on the grid at each timestep.
+        tau: Int representing "units" of pheromone ants deposit to their
+          location on the grid at each timestep.
 
     Returns:
         None.
@@ -66,10 +73,11 @@ def deposit_pheromone(ant:a.Ant, grid:g.Grid, tau:int)->None:
 
 def evaporate_pheromone(grid:g.Grid)->None:
     """
-    Function that performs global evaporation of pheromone at each grid point. Meant to be run once every timestep.
+    Function that performs global evaporation of pheromone at each grid point.
+      Meant to be run once every timestep.
 
     Args:
-        grid: Grid object representing the grid on which simulation is occuring.
+        grid: Grid object representing grid on which simulation is occuring.
 
     Returns:
         None.
@@ -84,7 +92,8 @@ def add_ant(ants_on_grid:list[a.Ant], hill_loc:int)->None:
     Function that adds an ant to the grid. Meant to be run once per timestep.
 
     Args:
-        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain
+          only ants that are on the grid.
         hill_loc: Tuple with ant hill location, default (128, 128).
     
     Returns:
@@ -95,15 +104,20 @@ def add_ant(ants_on_grid:list[a.Ant], hill_loc:int)->None:
 
 
 ######## Wrapper simulation function - all functions for one step ########
-def simulation_step(ants_on_grid:list[a.Ant], simulation_grid:g.Grid, fidelity:int, tau:int)->None:
+def simulation_step(ants_on_grid:list[a.Ant], simulation_grid:g.Grid,
+                     fidelity:int, tau:int)->None:
     """
     Performs one time step.
 
     Args:
-        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
-        simulation_grid: Grid object representing lattice ants are being simulated on.
-        fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
-        tau: Int representing "units" of pheromone ants deposit to their location on the grid at each timestep.
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain
+          only ants that are on the grid.
+        simulation_grid: Grid object representing lattice ants are being
+          simulated on.
+        fidelity: Int representing the probability of an ant to keep following
+          a trail. From paper 3a: 255, 3b: 251, 3c: 247
+        tau: Int representing "units" of pheromone ants deposit to their
+          location on the grid at each timestep.
 
     Returns:
         None.
@@ -139,7 +153,8 @@ def total_L_value(ants_on_grid:list[a.Ant]):
     Returns number of exploratory (lost) ants at time t across the whole grid.
 
     Args:
-        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain
+          only ants that are on the grid.
 
     Returns:
         sum_L: Int representing the number of exploratory ants at time t.
@@ -153,7 +168,8 @@ def total_F_value(ants_on_grid:list[a.Ant]):
     Returns number of follower ants at time t across the whole grid.
 
     Args:
-        ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
+        ants_on_grid: List of Ant objects on simulation_grid. Should contain
+          only ants that are on the grid.
 
     Returns:
         sum_F: Int representing the number of follower ants at time t.
