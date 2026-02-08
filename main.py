@@ -1,9 +1,9 @@
-# Run simulation from this file
+"""Main file - add user inputs and run simulation here"""
 
 import simulation_run as sr
 
 
-# Simulation 1
+######## Fig 3a ########
 fidelity = 255  # according to Fig 3a from the paper
 tau = 12 # according to Fig 3a from the paper
 grid_size = 256 # according to paper
