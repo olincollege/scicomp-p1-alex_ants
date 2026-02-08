@@ -1,24 +1,30 @@
 """Contains simulation function. To be run in main.py."""
 
 # imports
+import matplotlib.pyplot as mp
 import simulation_setup as ss
-import ants as a
 import grid as g
 import visualize as v
-import matplotlib.pyplot as mp
 
 
-def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, verbose:bool = False, live_vis:bool = False):
+def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500,
+                   verbose:bool = False, live_vis:bool = False):
     """
     Function contains loop of simulation steps. Shows final plot of ant trails.
 
     Args:
-        grid_size: Int representing the number of points of grid, default 256 for a 256x256 point grid.
-        fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
-        tau: Int representing "units" of pheromone ants deposit to their location on the grid at each timestep.
-        num_steps: Int representing number of steps to simulate. Default 1500, according to Fig 3 description.
-        verbose: Boolean to show extra print statements, good for debugging. Default False; off.
-        live_vis: Boolean to show live visualization, nice to see steps dynamically but takes a lot fo time. Default False; off.
+        grid_size: Int representing the number of points of grid, default 256
+         for a 256x256 point grid.
+        fidelity: Int representing the probability of an ant to keep following
+          a trail. From paper 3a: 255, 3b: 251, 3c: 247
+        tau: Int representing "units" of pheromone ants deposit to their
+          location on the grid at each timestep.
+        num_steps: Int representing number of steps to simulate. Default 1500,
+          according to Fig 3 description.
+        verbose: Boolean to show extra print statements, good for debugging.
+          Default False; off.
+        live_vis: Boolean to show live visualization, nice to see steps
+          dynamically but takes a lot fo time. Default False; off.
 
     Returns:
         None
@@ -47,7 +53,7 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, ver
         if verbose:
             print(f"Step: {i}, num ants on grid: {len(ants_on_grid)}")
 
-        if live_vis: # 
+        if live_vis:
             v.visualize_grid_live(ants_on_grid, simulation_grid, i, pause=0.05)
     if live_vis:
         mp.show()
