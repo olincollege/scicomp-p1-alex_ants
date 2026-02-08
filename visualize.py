@@ -4,16 +4,7 @@
 import matplotlib.pyplot as mp
 
 ######## Global Variables ########
-direction_to_angle = {
-    0:   0,     # Up
-    1:  -45,    # Up-right
-    2:  -90,    # Right
-    3: -135,    # Down-right
-    4:  180,    # Down
-    5:  135,    # Down-left
-    6:   90,    # Left
-    7:   45,    # Up-left
-}
+from constants import DIRECTION_TO_ANGLE
 
 
 ######## Functions ########
@@ -45,7 +36,7 @@ def visualize_grid(ants_on_grid, simulation_grid):
             x, y = ant.get_location()
             direction = ant.get_direction()
 
-            angle = direction_to_angle[direction]
+            angle = DIRECTION_TO_ANGLE[direction]
             mp.scatter(x, y, marker=(3, 0, angle), c="red", s=20)
 
     mp.show()
@@ -81,7 +72,7 @@ def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
             x, y = ant.get_location()
             direction = ant.get_direction()
 
-            angle = direction_to_angle[direction]
+            angle = DIRECTION_TO_ANGLE[direction]
             mp.scatter(x, y, marker=(3, 0, angle), c="red", s=20)
 
     mp.pause(pause)

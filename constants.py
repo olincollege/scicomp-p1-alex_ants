@@ -18,3 +18,15 @@ DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to curren
 
 # global pheromone evaporation rate (per step):
 EVAP_RATE = 1
+
+# ant heading direcitons for matplotlib visualization
+DIRECTION_TO_ANGLE = {
+    0:   0,     # Up
+    1:  -45,    # Up-right
+    2:  -90,    # Right
+    3: -135,    # Down-right
+    4:  180,    # Down
+    5:  135,    # Down-left
+    6:   90,    # Left
+    7:   45,    # Up-left
+}
