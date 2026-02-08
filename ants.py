@@ -31,7 +31,7 @@ class Ant:
         on_grid
     """
 
-    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.002)):
+    def __init__(self, x:int = 128, y:int = 128, B:tuple[float, float, float, float] = (0.360, 0.047, 0.008, 0.002))-> None:
         self.x = x
         self.y = y
         self.B = B
@@ -43,7 +43,7 @@ class Ant:
     def __repr__(self)->str:
         return f"ant | x-loc: {self.x}, y-loc: {self.y}, direction: {self.direction}, on grid: {self.on_grid}, state: {self.get_state()}, probability forward movement: {self.p_straight}, turning kernel (B): {self.B}"
     
-    # 'Get' functions
+    # 'Get' Functions
     def get_direction(self)->int:
         """Gets the ant's intended direction to move."""
         return self.direction
@@ -60,8 +60,8 @@ class Ant:
         """Returns True is ant on grid, False if not."""
         return self.on_grid
     
-    # 'Set' functions
-    def set_location(self, x_new:int, y_new:int):
+    # 'Set' Functions
+    def set_location(self, x_new:int, y_new:int)->None:
         """Updates x and y location of ant to new x and y location."""
         if isinstance(x_new, int) and isinstance(y_new, int):
             self.x = x_new
@@ -69,7 +69,7 @@ class Ant:
         else:
             raise TypeError("Invalid data type; Ant location should be ints.")
 
-    def set_ant_state(self, state_new:str):
+    def set_ant_state(self, state_new:str)->None:
         """Updates ant state to new state."""
         if isinstance(state_new, str):
             if(state_new == 'explorer' or state_new == 'follower'):
@@ -79,11 +79,11 @@ class Ant:
         else:
             raise TypeError("Invalid data type; Ant state should be a string.")
 
-    def set_direction(self, direction_new:int):
+    def set_direction(self, direction_new:int)->None:
         """set ant direction to new angle."""
         self.direction = direction_new
 
-    def set_on_grid(self, on_grid:bool):
+    def set_on_grid(self, on_grid:bool)->None:
         """Sets ant as "off" grid; for when an ant crosses the grid boundary."""
         self.on_grid = on_grid
 
@@ -92,6 +92,7 @@ class Ant:
     def new_random_delta_turn(self)->int:
         """
         Function determines if ant will move straight or randomly turn.
+        Used by explorer ants.
 
         Args:
             self: Ant object representing the ant.
@@ -100,7 +101,10 @@ class Ant:
             delta_turn: Int of value +/- 1, 2, 3, 4, 0 representing the number of 45 degree units to turn. If straight, the value is 0.
 
         """
-
+        # deciding whether to go straight or turn; if random float between 0
+        # and 1 is less than probability to go straight, ant will contine
+        # straight. If not, the ant turns; the amount is randomized form
+        # turning kernel B.
         if np.random.rand() < self.p_straight:
             delta_turn = 0
         else:
@@ -135,6 +139,7 @@ class Ant:
 
         """
         ant_x, ant_y = self.get_location()
+
         # check the values of 7 - 0 - 1, so grid values to left, forward, and right
         forward_dx, forward_dy = DIRECTION_VECTORS[self.direction]
         left_dx, left_dy = DIRECTION_VECTORS[(self.direction - 1) % 8] # grid space 7, represented as -1
@@ -156,9 +161,10 @@ class Ant:
         return delta_turn
 
 
-    def update_direction(self, grid:g.Grid, fidelity:int):
+    def update_direction(self, grid:g.Grid, fidelity:int)->None:
         """
         Function updates ant direction. Determines the new "forward" direction in terms of 45 degree turn units (0-7). Positive is clockwise.
+        Imagine a 3x3 grid, with the ant occupying the central space:
         0: Forward
         1: Upper right (45 degrees)
         2: Right (90 degrees)
@@ -210,7 +216,7 @@ class Ant:
 
 ######## Turning angle function ants ########
 
-def angle_of_turn(B:tuple)->int:
+def angle_of_turn(B:tuple[float, float, float, float])->int:
     """
     Function generates a new turn angle with B kernel for an explorer ant's change in direction.
 

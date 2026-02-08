@@ -51,6 +51,7 @@ class Grid:
         else:
             return self.grid[y, x]
 
+    # 'Set' Functions
     def set_pheromone_for_point(self, x:int, y:int, value:int)->None:
         """Sets new pheromone value for one point on the grid."""
         if x < 0 or x >= self.size or y < 0 or y >= self.size:
