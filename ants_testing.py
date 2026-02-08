@@ -50,7 +50,7 @@ def test_set_location_valid():
 
     # testing valid location
     ant.set_location(10, 10)
-    assert ant.get_location() == 10, 10
+    assert ant.get_location() == (10, 10)
 
 def test_set_location_both_invalid():
     """Check that set_location functions only sets x and y integer positions."""
