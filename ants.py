@@ -4,7 +4,11 @@
 import numpy as np
 import grid as g
 
-# Global Variables - for follower ant
+######## Global Variables ########
+# ant states
+EXPLORER = "explorer"
+FOLLOWER = "follower"
+
 DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to current position for ant movement!!
     (0, -1),  # 0: Up
     (1, -1),  # 1: Up-Right
@@ -17,6 +21,7 @@ DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to curren
 ]
 
 
+######## Ant class ########
 class Ant:
     """
     Represents an ant agent on the grid. 
@@ -37,7 +42,7 @@ class Ant:
         self.B = B
         self.p_straight = 1-sum(B) # default 0.581
         self.direction = np.random.randint(0, 8)
-        self.state = 'explorer'
+        self.state = EXPLORER
         self.on_grid = True
 
     def __repr__(self)->str:
@@ -72,10 +77,10 @@ class Ant:
     def set_ant_state(self, state_new:str)->None:
         """Updates ant state to new state."""
         if isinstance(state_new, str):
-            if(state_new == 'explorer' or state_new == 'follower'):
+            if(state_new == EXPLORER or state_new == FOLLOWER):
                 self.state = state_new
             else:
-                raise ValueError("Invalid state; Ant state should be either 'explorer' or 'follower'.")
+                raise ValueError("Invalid state; Ant state should be either EXPLORER or FOLLOWER.")
         else:
             raise TypeError("Invalid data type; Ant state should be a string.")
 
@@ -155,7 +160,7 @@ class Ant:
         elif C_1 < C_7: # if C(7) > C(1): # if right C is greater than the left C, move right
             delta_turn = -1
         else: # set state as explorer, run update_direction again
-            self.set_ant_state('explorer')
+            self.set_ant_state(EXPLORER)
             delta_turn = self.explorer_turn()
 
         return delta_turn
@@ -185,9 +190,9 @@ class Ant:
         # determine if new state is explorer or follower
         new_state = self.determine_state(fidelity)
 
-        if new_state == 'explorer':
+        if new_state == EXPLORER:
             delta_turn = self.explorer_turn() 
-        elif new_state == 'follower':
+        elif new_state == FOLLOWER:
             delta_turn = self.follower_turn(grid)
 
         new_direction = (self.direction + delta_turn) % 8 # the remainder here turns the left "negative" delta_turns into 4, 5, 6, 7.
@@ -207,9 +212,9 @@ class Ant:
         
         """
         if np.random.randint(0, 257) < fidelity: # if the ant is staying a follower, not inclusive of 257, 0-256
-            self.set_ant_state('follower')
+            self.set_ant_state(FOLLOWER)
         else:
-            self.set_ant_state('explorer')
+            self.set_ant_state(EXPLORER)
 
         return self.get_state()
 
