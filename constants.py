@@ -15,3 +15,6 @@ DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to curren
     (-1, 0),  # 6: Left
     (-1, -1), # 7: Up-Left
 ]
+
+# global pheromone evaporation rate (per step):
+EVAP_RATE = 1

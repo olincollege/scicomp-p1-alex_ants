@@ -1,15 +1,15 @@
-""" Contains code to set up grid """
+""" Contains simulation step function for ant trial modeling: movement, pheromones, population updates. """
 
 # imports
-import numpy as np
-import matplotlib.pyplot as mp
 import ants as a
+import grid as g
 
 ######## Global Variables ########
-from constants import DIRECTION_VECTORS
+from constants import DIRECTION_VECTORS, EXPLORER, FOLLOWER, EVAP_RATE
 
-######## Simulation step functions ########
-def move_ant(ant, grid, fidelity):
+
+######## Ant Movement ########
+def move_ant(ant:a.Ant, grid:g.Grid, fidelity:int)->None:
     """
     Function moves the ant one lattice grid in the ant's chosen direction.
 
@@ -27,27 +27,23 @@ def move_ant(ant, grid, fidelity):
 
         # update direction
         ant.update_direction(grid, fidelity)
-        ant_direction = (
-            ant.get_direction()
-        )  # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
+        ant_direction = (ant.get_direction())  # gets the updated 0-7 direction where ant is headed relative to 0 being 'up'.
 
         dx, dy = DIRECTION_VECTORS[ant_direction]
 
         new_x = ant_x + dx
         new_y = ant_y + dy
 
-        # If ant moving across grid boundary:
-        if new_x > (grid.get_size() - 1) or new_x < 0:
-            ant.set_on_grid(False)  # sets the ant as off the grid
-            return
-        if new_y > (grid.get_size() - 1) or new_y < 0:
+        # Check if ant moving across grid boundary:
+        if not (0 <= new_x < grid.size and 0 <= new_y < grid.size):
             ant.set_on_grid(False)  # sets the ant as off the grid
             return
 
         ant.set_location(new_x, new_y)
 
 
-def pheromone_deposition(ant, grid, tau):
+######## Pheromone Functions ########
+def deposit_pheromone(ant:a.Ant, grid:g.Grid, tau:int)->None:
     """
     Function that places a 'tau' amount of pheromone at the location of each ant. Meant to be run once per ant every timestep.
 
@@ -68,8 +64,7 @@ def pheromone_deposition(ant, grid, tau):
             grid.get_pheromone_for_point(x_deposit, y_deposit) + tau,
         )
 
-
-def pheromone_evaporation(grid):
+def evaporate_pheromone(grid:g.Grid)->None:
     """
     Function that performs global evaporation of pheromone at each grid point. Meant to be run once every timestep.
 
@@ -79,23 +74,12 @@ def pheromone_evaporation(grid):
     Returns:
         None.
     """
-    for point_x in range(grid.size):
-        for point_y in range(grid.size):
-            new_pheromone_value = (
-                grid.get_pheromone_for_point(point_x, point_y) - 1
-            )
-
-            if (
-                new_pheromone_value <= 0
-            ):  # If new proposed value is 0 or negative, set the pheromone concentration value to 0
-                grid.set_pheromone_for_point(point_x, point_y, 0)
-            else:
-                grid.set_pheromone_for_point(
-                    point_x, point_y, new_pheromone_value
-                )
+    grid.grid -= EVAP_RATE # global application evaporation rate per step
+    grid.grid[grid.grid < 0] = 0 # setting negative values to 0
 
 
-def add_ant(ants_on_grid, hill_loc):
+######## Ant Population ########
+def add_ant(ants_on_grid:list[a.Ant], hill_loc:int)->None:
     """
     Function that adds an ant to the grid. Meant to be run once per timestep.
 
@@ -108,13 +92,12 @@ def add_ant(ants_on_grid, hill_loc):
 
     """
     ants_on_grid.append(a.Ant(x=hill_loc, y=hill_loc))
-    return ants_on_grid
 
 
 ######## Wrapper simulation function - all functions for one step ########
-def simulation_step(ants_on_grid, simulation_grid, fidelity, tau):
+def simulation_step(ants_on_grid:list[a.Ant], simulation_grid:g.Grid, fidelity:int, tau:int)->None:
     """
-    Wrapper function for all things that need to happen in a simulation step.
+    Performs one time step.
 
     Args:
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
@@ -127,23 +110,31 @@ def simulation_step(ants_on_grid, simulation_grid, fidelity, tau):
 
     """
     # generate new ant per timestep
-    ants_on_grid = add_ant(ants_on_grid, simulation_grid.get_hill_loc())
+    add_ant(ants_on_grid, simulation_grid.get_hill_loc())
+    active_ants = []
 
     # ant movement + ant deposition to new position
     for ant in ants_on_grid:
-        if ant.is_on_grid() == True:
-            pheromone_deposition(ant, simulation_grid, tau)
-            move_ant(ant, simulation_grid, fidelity)
-            if ant.is_on_grid() == False:  # if ant moves off grid, remove ant
-                ants_on_grid.remove(ant)
-        else:  # if ant somehow off grid but still in ants_on_grid, remove ant
-            ants_on_grid.remove(ant)
+        # if ant not on grid, skips deposit pheromone and move ant
+        if not ant.is_on_grid():
+            continue
+        # if an is on grid, deposit pheromone and move ant
+        deposit_pheromone(ant, simulation_grid, tau)
+        move_ant(ant, simulation_grid, fidelity)
+
+        # if ant is on grid, add to "active_ants" list
+        if ant.is_on_grid():
+            active_ants.append(ant)
+
+    # update ant list with off-grid ants
+    ants_on_grid = active_ants
+
     # global grid evaporation
-    pheromone_evaporation(simulation_grid)
+    evaporate_pheromone(simulation_grid)
 
 
 ######## Output Parameters ########
-def total_L_value(ants_on_grid):
+def total_L_value(ants_on_grid:list[a.Ant]):
     """
     Returns number of exploratory (lost) ants at time t across the whole grid.
 
@@ -154,14 +145,10 @@ def total_L_value(ants_on_grid):
         sum_L: Int representing the number of exploratory ants at time t.
     
     """
-    sum_L = 0
-    for ant in ants_on_grid:
-        if ant.get_state() == "explorer":
-            sum_L += 1
+    sum_L = sum(1 for ant in ants_on_grid if ant.get_state() == EXPLORER)
     return sum_L
 
-
-def total_F_value(ants_on_grid):
+def total_F_value(ants_on_grid:list[a.Ant]):
     """
     Returns number of follower ants at time t across the whole grid.
 
@@ -172,8 +159,5 @@ def total_F_value(ants_on_grid):
         sum_F: Int representing the number of follower ants at time t.
 
     """
-    sum_F = 0
-    for ant in ants_on_grid:
-        if ant.get_state() == "follower":
-            sum_F += 1
+    sum_F = sum(1 for ant in ants_on_grid if ant.get_state() == FOLLOWER)
     return sum_F
