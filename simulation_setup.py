@@ -25,6 +25,7 @@ def move_ant(ant, grid, fidelity):
     Args:
         ant: Ant object representing ant that needs to be moved for one step of the simulation.
         grid: Grid object representing the grid on which the ant needs to move.
+        fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
 
     Returns:
         None.
@@ -128,6 +129,7 @@ def simulation_step(ants_on_grid, simulation_grid, fidelity, tau):
         ants_on_grid: List of Ant objects on simulation_grid. Should contain only ants that are on the grid.
         simulation_grid: Grid object representing lattice ants are being simulated on.
         fidelity: Int representing the probability of an ant to keep following a trail. From paper 3a: 255, 3b: 251, 3c: 247
+        tau: Int representing "units" of pheromone ants deposit to their location on the grid at each timestep.
 
     Returns:
         None.
