@@ -35,9 +35,9 @@ def test_custom_size_initialization_odd():
 
 def test_custom_size_initialization_invalid_type():
     """Check grid initialization with wrong type input for size."""
-    with pytest.raises(TypeError, match="Invalid input type; size input must"\
-    " be an int."):
-        g.Grid(size=101)
+    with pytest.raises(TypeError, match="Invalid input type; size input" \
+    " must be an int."):
+        g.Grid(size="hello")
 
 ######## get function tests ########
 
