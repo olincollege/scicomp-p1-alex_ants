@@ -48,7 +48,7 @@ class Ant:
     def __repr__(self)->str:
         return f"ant | x-loc: {self.x}, y-loc: {self.y}, direction: {self.direction}, on grid: {self.on_grid}, state: {self.get_state()}, probability forward movement: {self.p_straight}, turning kernel (B): {self.B}"
     
-    # 'Get' Functions
+    ######## 'Get' Functions ########
     def get_direction(self)->int:
         """Gets the ant's intended direction to move."""
         return self.direction
@@ -65,19 +65,18 @@ class Ant:
         """Returns True is ant on grid, False if not."""
         return self.on_grid
     
-    # 'Set' Functions
+    ######## 'Set' Functions ########
     def set_location(self, x_new:int, y_new:int)->None:
-        """Updates x and y location of ant to new x and y location."""
-        if isinstance(x_new, int) and isinstance(y_new, int):
-            self.x = x_new
-            self.y = y_new
-        else:
+        """Set ant location."""
+        if not isinstance(x_new, int) and isinstance(y_new, int):
             raise TypeError("Invalid data type; Ant location should be ints.")
+        self.x = x_new
+        self.y = y_new
 
     def set_ant_state(self, state_new:str)->None:
-        """Updates ant state to new state."""
+        """Set ant state."""
         if isinstance(state_new, str):
-            if(state_new == EXPLORER or state_new == FOLLOWER):
+            if state_new in {EXPLORER, FOLLOWER}:
                 self.state = state_new
             else:
                 raise ValueError("Invalid state; Ant state should be either EXPLORER or FOLLOWER.")
@@ -90,11 +89,11 @@ class Ant:
 
     def set_on_grid(self, on_grid:bool)->None:
         """Sets ant as "off" grid; for when an ant crosses the grid boundary."""
-        self.on_grid = on_grid
+        self.on_grid = bool(on_grid)
 
 
-    ######## Exploratory Movement Determination ########
-    def new_random_delta_turn(self)->int:
+    ######## Explorer Movement Determination ########
+    def _new_delta_turn(self)->int:
         """
         Function determines if ant will move straight or randomly turn.
         Used by explorer ants.
@@ -127,10 +126,28 @@ class Ant:
             delta_turn: Int of value +/- 1, 2, 3, 4, 0 representing the number of 45 degree units to turn. If straight, the value is 0.
 
         """
-        delta_turn = self.new_random_delta_turn() # determines turn only based on turning kernel and probability to go straight
+        delta_turn = self._new_delta_turn() # determines turn only based on turning kernel and probability to go straight
         return delta_turn
     
     ######## Follower Movement Determination ########
+    def _follower_pheromone_scan(self, direction_to_scan:int, grid:g.Grid, x:int, y:int)->int:
+        """
+        Returns pheromone value of step in direction to scan.
+
+        Args:
+            direction_to_scan: Int representing direction of grid space where ant may move on the next time step.
+            grid: Grid representing grid used in simulation.
+            x: ant's current x location on the grid.
+            y: ant's current y location on the grid.
+
+        Returns:
+            pheromone: Int representing pheromone level at grid space ant is looking at in direction_to_scan.
+
+        """
+        dx, dy = DIRECTION_VECTORS[direction_to_scan]
+        pheromone = grid.get_pheromone_for_point(x + dx, y + dy)
+        return pheromone
+
     def follower_turn(self, grid:g.Grid)->int:
         """
         Function determines if follower ant will continue following path or switch to explorer.
@@ -143,21 +160,23 @@ class Ant:
             delta_turn: Int of value +/- 1, 2, 3, 4, 0 representing the number of 45 degree units to turn. If straight, the value is 0.
 
         """
-        ant_x, ant_y = self.get_location()
+        x, y = self.get_location()
+
+        forward = self.direction
+        left = (forward - 1) % 8 # grid space 7
+        right = (forward + 1) % 8 # grid space 1
 
         # check the values of 7 - 0 - 1, so grid values to left, forward, and right
-        forward_dx, forward_dy = DIRECTION_VECTORS[self.direction]
-        left_dx, left_dy = DIRECTION_VECTORS[(self.direction - 1) % 8] # grid space 7, represented as -1
-        right_dx, right_dy = DIRECTION_VECTORS[(self.direction + 1) % 8] # grid space 1, represented as 1
+        C_0 = self._follower_pheromone_scan(forward, grid, x, y)
+        C_1 = self._follower_pheromone_scan(right, grid, x, y)
+        C_7 = self._follower_pheromone_scan(left, grid, x, y)
 
-        C_0 = grid.get_pheromone_for_point(ant_x + forward_dx, ant_y + forward_dy)
-        C_1 = grid.get_pheromone_for_point(ant_x + right_dx, ant_y + right_dy)
-        C_7 = grid.get_pheromone_for_point(ant_x + left_dx, ant_y + left_dy)
-        if C_0 > C_1 and C_0 > C_7: # if C(0) is > C(7) and C(1): # if trail moves forward
+        # path determination based on concentrations in the top left (-45degree), forward (0 degree), and right (45degree) grid spaces
+        if C_0 > C_1 and C_0 > C_7: # if forward space has most pheromone, trail moves forward
             delta_turn = 0
-        elif C_1 > C_7: # if C(1) > C(7): # if left concentration is greater than right C, move left
+        elif C_1 > C_7: # if C(1) > C(7): # if left concentration is greater than right concentration, move left
             delta_turn = 1
-        elif C_1 < C_7: # if C(7) > C(1): # if right C is greater than the left C, move right
+        elif C_1 < C_7: # if C(7) > C(1): # if right concentration is greater than the left concentration, move right
             delta_turn = -1
         else: # set state as explorer, run update_direction again
             self.set_ant_state(EXPLORER)
@@ -192,17 +211,19 @@ class Ant:
 
         if new_state == EXPLORER:
             delta_turn = self.explorer_turn() 
-        elif new_state == FOLLOWER:
+        else:
             delta_turn = self.follower_turn(grid)
-
-        new_direction = (self.direction + delta_turn) % 8 # the remainder here turns the left "negative" delta_turns into 4, 5, 6, 7.
+        
+        # self.direction (0-7, according to 3x3 grid around ant) + delta_turn (-4:+4) can be from -4 to 11.
+        # the % allows the negative numbers to map to the left turn blocks (4-7), and the positive numbers to map to the right turn blocks (1-4).
+        new_direction = (self.direction + delta_turn) % 8
         
         self.set_direction(new_direction)
 
 
     def determine_state(self, fidelity:int)->str:
         """
-        Determines whether or not ant will be follower or explorer based on fidelity.
+        Determines whether ant is follower or explorer based on fidelity.
 
         Args:
             fidelity: Int representing the user input fidelity value. Probability that the ant will stay on the path.
@@ -235,7 +256,7 @@ def angle_of_turn(B:tuple[float, float, float, float])->int:
     # use turning kernel B to randomize how many 45 degree directions the ant turns
     turn_angles = [1, 2, 3, 4] # each value represents turns in 45 degree increments; 0 is forward.
 
-    # modifying 'B' so that values add up to 1 but probabilities are still the proportionally without:
+    # modifying B so that values add up to 1 but probabilities are still proportional:
     B_adjusted = tuple(np.array(B, dtype=float) / sum(B))
 
     angle_amount = np.random.choice(turn_angles, p = B_adjusted)
