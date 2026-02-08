@@ -36,35 +36,31 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500,
     simulation_grid = g.Grid(grid_size)
 
 
-    # optional debugging output
+    # optional debugging output, live figure
     if verbose:
         print(ants_on_grid)
         print(simulation_grid)
         print(simulation_grid.get_hill_loc())
+    if live_vis:
+        mp.figure()
 
 
     ######## During simulation ########
     # Main simulation loop
     print("####### DURING SIMULATION #######")
-    if live_vis:
-        mp.figure()
     for i in range(num_steps):
         ss.simulation_step(ants_on_grid, simulation_grid, fidelity, tau)
+
+        # optional debugging output, live figure
         if verbose:
             print(f"Step: {i}, num ants on grid: {len(ants_on_grid)}")
-
         if live_vis:
             v.visualize_grid_live(ants_on_grid, simulation_grid, i, pause=0.05)
-    if live_vis:
-        mp.show()
 
 
     ######## Post-simulation ########
     # final statistics and visualize results
     print("####### POST SIMULATION #######")
-    if verbose:
-        print(ants_on_grid)
-        print(simulation_grid.grid)
 
     # final follower and explorer ant counts
     print(
@@ -74,3 +70,11 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500,
 
     # Visualize matplotlib of grid at final timestep
     v.visualize_grid(ants_on_grid, simulation_grid)
+
+    # optional debugging output, live figure
+    if live_vis:
+        mp.show()
+
+    if verbose:
+        print(ants_on_grid)
+        print(simulation_grid.grid)

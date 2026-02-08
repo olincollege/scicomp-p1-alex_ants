@@ -3,6 +3,8 @@
 # imports
 import numpy as np
 import grid as g
+
+######## Global Variables ########
 from constants import DIRECTION_VECTORS, EXPLORER, FOLLOWER
 
 
