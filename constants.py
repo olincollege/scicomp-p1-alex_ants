@@ -5,7 +5,9 @@ EXPLORER = "explorer"
 FOLLOWER = "follower"
 
 # direction vectors
-DIRECTION_VECTORS = [ # stores (dx, dy) lattice grid movement relative to current position for ant movement!!
+# stores (dx, dy) lattice grid movement relative to current position for ant
+#  movement!!
+DIRECTION_VECTORS = [
     (0, -1),  # 0: Up
     (1, -1),  # 1: Up-Right
     (1, 0),   # 2: Right
