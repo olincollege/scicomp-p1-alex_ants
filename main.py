@@ -5,6 +5,7 @@ import simulation_setup as ss
 import ants as a
 import grid as g
 import matplotlib.pyplot as mp
+import visualize as v
 
 
 # Simulation 1
@@ -36,16 +37,15 @@ for i in range(num_steps):
     ##### SANITY CHECK #####
     # print(ant)
     # ss.visualize_grid(ants_on_grid, simulation_grid)
-    ss.visualize_grid_live(ants_on_grid, simulation_grid, i, pause=0.01)
-mp.show()
+    # ss.visualize_grid_live(ants_on_grid, simulation_grid, i, pause=0.01)
+# mp.show()
 
 ### sanity checking simulation run ###
 print("####### POST SIMULATION #######")
 print(ants_on_grid)
-print(ant)
 print(simulation_grid.grid)
 print(
     f"Follower ants: {ss.total_F_value(ants_on_grid)}, Explorer ants:"
     f" {ss.total_L_value(ants_on_grid)}"
 )
-ss.visualize_grid(ants_on_grid, simulation_grid)
+v.visualize_grid(ants_on_grid, simulation_grid)
