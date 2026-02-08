@@ -19,7 +19,7 @@ class Grid:
         if isinstance(size, int):
             if size % 2 == 0:
                 self.size = size
-                self.hill_loc = size/2
+                self.hill_loc = int(size/2)
                 self.grid = np.zeros((size, size))
             else:
                 raise ValueError("Invalid size input; size input must be even.")

@@ -31,11 +31,11 @@ class Ant:
         on_grid
     """
 
-    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.004), p_straight = 0.581):
+    def __init__(self, x = 128, y = 128, B = (0.360, 0.047, 0.008, 0.002)):
         self.x = x
         self.y = y
         self.B = B
-        self.p_straight = p_straight
+        self.p_straight = 1-sum(B) # default 0.581
         self.direction = np.random.randint(0, 8)
         self.state = 'explorer'
         self.on_grid = True

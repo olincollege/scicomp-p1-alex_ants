@@ -11,14 +11,13 @@ import matplotlib.pyplot as mp
 fidelity = 255  # according to Fig 3a from the paper
 tau = 12 # according to Fig 3a from the paper
 grid_size = 256
-hill_loc = int(grid_size / 2)
-simulation_grid = g.Grid(grid_size, hill_loc)
+simulation_grid = g.Grid(grid_size)
 ants_on_grid = []  # will store all ant objects on the grid
 
 ### for sanity checking ###
 print(ants_on_grid)
 print(simulation_grid)
-# ss.visualize_grid(ants_on_grid, simulation_grid)
+print(simulation_grid.get_hill_loc())
 
 ### run and print simulation ###
 print("####### DURING SIMULATION #######")
