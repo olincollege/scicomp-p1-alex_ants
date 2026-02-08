@@ -209,6 +209,8 @@ class Ant:
         Args:
             self: Ant object representing the ant.
             grid: Grid object used in simulation.
+            fidelity: Int representing the user input fidelity value.
+              Probability that the ant will stay on the path.
         
         Returns:
             None

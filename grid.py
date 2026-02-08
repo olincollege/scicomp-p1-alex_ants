@@ -49,7 +49,7 @@ class Grid:
     def get_pheromone_for_point(self, x:int, y:int)->int:
         """Gets pheromone value for one point on the grid. Returns C = 0 if
           point off grid."""
-        if not self._in_bounds:
+        if not self._in_bounds(x, y):
             return 0
         else:
             return self.grid[y, x]
@@ -64,4 +64,5 @@ class Grid:
     ######## Helper Function ########
     def _in_bounds(self, x:int, y:int)->int:
         """Checks if (x, y) is inside grid."""
-        return 0 <= x < self.size and 0 <= y < self.size
+        in_bounds = 0 <= x < self.size -1 and 0 <= y < self.size -1
+        return in_bounds
