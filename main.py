@@ -7,7 +7,7 @@ import simulation_run as sr
 fidelity = 255  # according to Fig 3a from the paper
 tau = 12 # according to Fig 3a from the paper
 grid_size = 256 # according to paper
-num_steps = 100 # according to Fig 3a description from paper
+num_steps = 10 # according to Fig 3a description from paper
 verbose = False
 live_vis = False
 
