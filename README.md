@@ -31,13 +31,22 @@ python main.py
 ## File Structure
 ants.py - Contains Ant class and all helper functions, including explorer/follower decision making.
 
-grid.py - Contains Grid class.
+constants.py - Contains global variables constant across all files in ants simulation.
 
-simulation_setup.py - Contains functions relevant to each simulation step.
-
-ants_testing.py - Tests relevant functions from ants.py.
+grid.py - Contains Grid class and all helper functions.
 
 main.py - Main python file from which to run the code.
+
+simulation_run.py - Contains simulation function. To be run in main.py.
+
+simulation_setup.py - Contains simulation step function for ant trial modeling: movement, pheromones, population updates. 
+
+visualize.py - Contains visualization functions.
+
+test_ants.py - Tests relevant functions in ants.py.
+
+test_grid.py - Tests relevant functions in grid.py.
+
 
 ## Author
 The creator of this repository is Alex Mineeva (amineeva).
@@ -54,11 +63,3 @@ ISSN 0022-5193,
 https://doi.org/10.1006/jtbi.1995.0205.
 (https://www.sciencedirect.com/science/article/pii/S0022519385702056)
 Abstract: This paper studies the role of chemical communication in the formation of trail networks by foraging ants. A cellular automaton model for the motion of the ants is formulated, which assumes that individuals interact according to a simple behavioural algorithm. The ants communicate by depositing trail markers composed of volatile chemicals that serve as attractants for other ants. The ants interact with the network both by following the trails and by extending and reinforcing the trails they follow. By varying the parameters describing these interactions we determine how variations in the behaviour of the individual ants lead to changes in the patterns of trail networks formed by the population. The results indicate that the ability of the group to form trails is inversely related with individual fidelity to trails.
-
-
-## Other
-### Reminder for Alex!!!
-Run vvv before submitting!! And make sure to update the requirements list above ^^^
-```
-pipreqs --mode compat --force
-```
