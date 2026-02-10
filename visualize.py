@@ -10,7 +10,7 @@ from constants import DIRECTION_TO_ANGLE
 
 
 ######## Static Visualization at a timestep ########
-def visualize_grid(ants_on_grid:list[a.Ant], simulation_grid:g.Grid)->None:
+def visualize_grid(ants_on_grid:list[a.Ant], simulation_grid:g.Grid, figure:str)->None:
     """
     Function visualizes the grid and ants at one timestep. The grid shows
       pheromone concentrations (white - 0, grey - some, black - high), shows
@@ -21,6 +21,7 @@ def visualize_grid(ants_on_grid:list[a.Ant], simulation_grid:g.Grid)->None:
           only ants that are on the grid.
         simulation_grid: Grid object representing lattice ants are being
           simulated on.
+        figure: str representing Figure name for figure titles.
 
     Returns:
         None.
@@ -31,11 +32,13 @@ def visualize_grid(ants_on_grid:list[a.Ant], simulation_grid:g.Grid)->None:
     _plot_grid(simulation_grid, vmax=84)
     _plot_ants(ants_on_grid)
 
+    mp.title(f"Figure {figure}")
+
     mp.show()
 
 
 ######## Dynamic Visualization ########
-def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
+def visualize_grid_live(ants_on_grid, simulation_grid, step, figure, pause=0.05):
     """
     Show live visualization of grid + ants.
 
@@ -45,6 +48,7 @@ def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
         simulation_grid: Grid object representing lattice ants are being
           simulated on.
         step: Int representing the iteration number.
+        figure: str representing Figure name for figure titles.
         pause: Number of seconds for the simulation to pause.
 
     Returns:
@@ -56,7 +60,7 @@ def visualize_grid_live(ants_on_grid, simulation_grid, step, pause=0.05):
     _plot_grid(simulation_grid, vmax=84)
     _plot_ants(ants_on_grid)
 
-    mp.title(f"Step {step}")
+    mp.title(f"Figure {figure}, Step {step}")
 
     mp.pause(pause)
 
