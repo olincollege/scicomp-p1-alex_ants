@@ -62,7 +62,7 @@ class Ant:
     ######## 'Set' Functions ########
     def set_location(self, x_new:int, y_new:int)->None:
         """Set ant location."""
-        if not isinstance(x_new, int) and isinstance(y_new, int):
+        if not isinstance(x_new, int) or not isinstance(y_new, int):
             raise TypeError("Invalid data type; Ant location should be ints.")
         self.x = x_new
         self.y = y_new
