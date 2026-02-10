@@ -12,4 +12,5 @@ verbose = False
 live_vis = False
 
 # Run simulation
-sr.run_simulation(grid_size, fidelity, tau, num_steps, verbose, live_vis)
+if __name__ == "__main__":
+    sr.run_simulation(grid_size, fidelity, tau, num_steps, verbose, live_vis)
