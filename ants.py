@@ -94,7 +94,7 @@ class Ant:
         Used by explorer ants.
 
         Args:
-            self: Ant object representing the ant.
+            None.
 
         Returns:
             delta_turn: Int of value +/- 1, 2, 3, 4, 0 representing the number
@@ -117,7 +117,7 @@ class Ant:
           turn.
 
         Args:
-            self: Ant object representing the ant.
+            None
 
         Returns:
             delta_turn: Int of value +/- 1, 2, 3, 4, 0 representing the number
@@ -157,7 +157,6 @@ class Ant:
           switch to explorer.
 
         Args:
-            self: Ant object representing the ant.
             grid: Grid representing grid used in simulation.
 
         Returns:
@@ -207,7 +206,6 @@ class Ant:
         7. Upper left (315 degrees)
         
         Args:
-            self: Ant object representing the ant.
             grid: Grid object used in simulation.
             fidelity: Int representing the user input fidelity value.
               Probability that the ant will stay on the path.
