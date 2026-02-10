@@ -10,6 +10,41 @@ This is implemented in Python. Individual agents (ants) move on a Numpy Array (g
 
 `fidelity` - probability per iteration of an ant remaining on a trail with a local concentration of C
 
+## Default Grid & Ant Rotation
+
+Ants move one grid space per iteration. Each ant stores its current heading as an integer from 0 to 7, representing one of 8 possible movement directions. This direction is relative to the ant's current position, and is stored in the ant's `direction` attribute. 
+
+| Direction | Meaning         | (dx, dy) |
+| --------- | --------------- | -------- |
+| 0         | Forward (Up)    | (0, -1)  |
+| 1         | Forward-Right   | (1, -1)  |
+| 2         | Right           | (1, 0)   |
+| 3         | Back-Right      | (1, 1)   |
+| 4         | Backward (Down) | (0, 1)   |
+| 5         | Back-Left       | (-1, 1)  |
+| 6         | Left            | (-1, 0)  |
+| 7         | Forward-Left    | (-1, -1) |
+
+In visualizations, ants are displayed as triangular markers pointing their current direction.
+
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="grid_orientation.png" height="300"><br>
+      Default grid (256x256), 
+    </td>
+    <td align="center">
+      <img src="ant_rotation_grid.png" height="300"><br>
+      Numbered grid locations around ant
+    </td>
+    <td align="center">
+      <img src="ant_dx_dy_movement_grid.png" height="300"><br>
+      Direction vectors for movement
+    </td>
+  </tr>
+</table>
+
 ## Usage Examples & Benchmarks
 
 Here is a comparison of the simulations this repo produces for figures 3a, b, c with the figures in the paper. In the current implementation, the simulated ant trails seem to curl more than the those in the reference figures. The reason behind this has not been fully explored and limits the use of this code. 
