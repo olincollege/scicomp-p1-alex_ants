@@ -4,6 +4,12 @@ This repository holds the code for the first project in ENGR3560: Scientific Com
 
 This is implemented in Python. Individual agents (ants) move on a Numpy Array (grid) and deposit pheromone as they move. Other ants can react to the pheromone levels and change their movement behavior from exploratory to following (a trail). The grid (and the ants) are visualized using MatPlotLib.
 
+## Key Simulation Variables
+
+`tau` - rate of pheromone deposition per ant per time step
+
+`fidelity` - probability per iteration of an ant remaining on a trail with a local concentration of C
+
 ## Usage Examples & Benchmarks
 
 Here is a comparison of the simulations this repo produces for figures 3a, b, c with the figures in the paper. In the current implementation, the simulated ant trails seem to curl more than the those in the reference figures. The reason behind this has not been fully explored and limits the use of this code. 
