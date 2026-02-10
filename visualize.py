@@ -83,6 +83,8 @@ def _plot_grid(grid:g.Grid, vmax:int)->None:
     mp.colorbar(label="Pheromone Concentration (C(x,t))")
     mp.xlim(0, grid.get_size())
     mp.ylim(grid.get_size(), 0)
+    mp.xlabel("X Position (grid spaces)")
+    mp.ylabel("Y Position (grid spaces)")
 
 
 def _plot_ants(ants_on_grid:list[a.Ant])->None:
