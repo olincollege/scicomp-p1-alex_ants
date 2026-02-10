@@ -62,7 +62,7 @@ Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1
   <tr>
     <td align="center">
       <img src="3a_paper.png" height="400"><br>
-      Figure 3a from paper, page 361
+      Figure 3a from paper, F = 468, L = 32 (p 361) 
     </td>
     <td align="center">
       <img src="3a_thisrepo.png" height="400"><br>
@@ -77,7 +77,7 @@ Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1
   <tr>
     <td align="center">
       <img src="3b_paper.png" height="400"><br>
-      Figure 3b from paper, page 361
+      Figure 3b from paper, F = 396, L = 89 (p 361) 
     </td>
     <td align="center">
       <img src="3b_thisrepo.png" height="400"><br>
@@ -91,7 +91,7 @@ Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1
   <tr>
     <td align="center">
       <img src="3c_paper.png" height="400"><br>
-      Figure 3c from paper, page 362
+      Figure 3c from paper, F = 297, L = 91 (p 362)
     </td>
     <td align="center">
       <img src="3c_thisrepo.png" height="400"><br>
