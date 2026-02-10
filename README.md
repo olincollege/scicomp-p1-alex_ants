@@ -37,15 +37,15 @@ In visualizations, ants are displayed as triangular markers pointing their curre
 <table>
   <tr>
     <td align="center">
-      <img src="grid_orientation.png" height="300"><br>
+      <img src="images/grid_orientation.png" height="300"><br>
       Default grid (256x256), 
     </td>
     <td align="center">
-      <img src="ant_rotation_grid.png" height="300"><br>
+      <img src="images/ant_rotation_grid.png" height="300"><br>
       Numbered grid locations around ant
     </td>
     <td align="center">
-      <img src="ant_dx_dy_movement_grid.png" height="300"><br>
+      <img src="images/ant_dx_dy_movement_grid.png" height="300"><br>
       Direction vectors for movement
     </td>
   </tr>
@@ -63,11 +63,11 @@ Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1
 <table>
   <tr>
     <td align="center">
-      <img src="3a_paper.png" height="400"><br>
+      <img src="images/3a_paper.png" height="400"><br>
       Figure 3a from paper, F = 468, L = 32 (p 361) 
     </td>
     <td align="center">
-      <img src="3a_thisrepo.png" height="400"><br>
+      <img src="images/3a_thisrepo.png" height="400"><br>
       Simulated result, F = 1386, L = 114
     </td>
   </tr>
@@ -78,11 +78,11 @@ Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1
 <table>
   <tr>
     <td align="center">
-      <img src="3b_paper.png" height="400"><br>
+      <img src="images/3b_paper.png" height="400"><br>
       Figure 3b from paper, F = 396, L = 89 (p 361) 
     </td>
     <td align="center">
-      <img src="3b_thisrepo.png" height="400"><br>
+      <img src="images/3b_thisrepo.png" height="400"><br>
       Simulated result, F = 1157, L = 343
     </td>
   </tr>
@@ -92,11 +92,11 @@ Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1
 <table>
   <tr>
     <td align="center">
-      <img src="3c_paper.png" height="400"><br>
+      <img src="images/3c_paper.png" height="400"><br>
       Figure 3c from paper, F = 297, L = 91 (p 362)
     </td>
     <td align="center">
-      <img src="3c_thisrepo.png" height="400"><br>
+      <img src="images/3c_thisrepo.png" height="400"><br>
       Simulated result, F = 1077, L = 423
     </td>
   </tr>
