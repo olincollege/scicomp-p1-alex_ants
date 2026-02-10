@@ -56,7 +56,7 @@ Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1
   <tr>
     <td align="center">
       <img src="3a_paper.png" height="400"><br>
-      Figure 3a from paper, pagr 361
+      Figure 3a from paper, page 361
     </td>
     <td align="center">
       <img src="3a_thisrepo.png" height="400"><br>
