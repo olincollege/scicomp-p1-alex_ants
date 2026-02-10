@@ -4,6 +4,55 @@ This repository holds the code for the first project in ENGR3560: Scientific Com
 
 This is implemented in Python. Individual agents (ants) move on a Numpy Array (grid) and deposit pheromone as they move. Other ants can react to the pheromone levels and change their movement behavior from exploratory to following (a trail). The grid (and the ants) are visualized using MatPlotLib.
 
+## Usage Examples & Benchmarks
+
+Here is a comparison of the simulations this repo produces for figures 3a, b, c with the figures in the paper. In the current implementation, the simulated ant trails seem to curl more than the those in the reference figures. The reason behind this has not been fully explored and limits the use of this code. 
+
+Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1500`
+
+### Figure 3a (`fidelity: 255`)
+<table>
+  <tr>
+    <td align="center">
+      <img src="3a_paper.png" height="400"><br>
+      Figure 3a from paper, pagr 361
+    </td>
+    <td align="center">
+      <img src="3a_thisrepo.png" height="400"><br>
+      Simulated result, F = 1386, L = 114
+    </td>
+  </tr>
+</table>
+
+
+### Figure 3b (`fidelity: 251`)
+<table>
+  <tr>
+    <td align="center">
+      <img src="3b_paper.png" height="400"><br>
+      Figure 3b from paper, page 361
+    </td>
+    <td align="center">
+      <img src="3b_thisrepo.png" height="400"><br>
+      Simulated result, F = 1157, L = 343
+    </td>
+  </tr>
+</table>
+
+### Figure 3c (`fidelity: 247`)
+<table>
+  <tr>
+    <td align="center">
+      <img src="3c_paper.png" height="400"><br>
+      Figure 3c from paper, page 362
+    </td>
+    <td align="center">
+      <img src="3c_thisrepo.png" height="400"><br>
+      Simulated result, F = 1077, L = 423
+    </td>
+  </tr>
+</table>
+
 ## Requirements
 
 The `requirements.txt` file contains the required package imports:
