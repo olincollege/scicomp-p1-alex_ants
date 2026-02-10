@@ -32,12 +32,12 @@ def test_custom_size_initialization_odd():
     " be even."):
         g.Grid(size=101)
 
-def test_custom_size_initialization_not_postivie():
+def test_custom_size_initialization_not_postive():
     """Check grid initialization with custom size that is not above 0."""
 
     with pytest.raises(ValueError, match="Invalid size input, size input" \
     " must be larger than 0."):
-        g.Grid(size=101)
+        g.Grid(size=-8)
 
 
 def test_custom_size_initialization_invalid_type():
