@@ -10,7 +10,11 @@ import visualize as v
 def run_simulation(grid_size:int, fidelity:int, tau:int, figure:str, num_steps:int=1500,
                    verbose:bool = False, live_vis:bool = False):
     """
-    Function contains loop of simulation steps. Shows final plot of ant trails.
+    Function runs an ant foraging simulation and shows final result trail
+      network. 
+    - Initializes simulation grid and ant population
+    - Executes simulation loop for num_steps
+    - Produces final plots of pheromone trails and ants.
 
     Args:
         grid_size: Int representing the number of points of grid, default 256
