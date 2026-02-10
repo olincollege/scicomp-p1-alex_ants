@@ -7,7 +7,7 @@ import grid as g
 import visualize as v
 
 
-def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, figure:str,
+def run_simulation(grid_size:int, fidelity:int, tau:int, figure:str, num_steps:int=1500,
                    verbose:bool = False, live_vis:bool = False):
     """
     Function contains loop of simulation steps. Shows final plot of ant trails.
@@ -19,9 +19,9 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, fig
           a trail. From paper 3a: 255, 3b: 251, 3c: 247
         tau: Int representing "units" of pheromone ants deposit to their
           location on the grid at each timestep.
+        figure: str representing Figure name for figure titles.
         num_steps: Int representing number of steps to simulate. Default 1500,
           according to Fig 3 description.
-        figure: str representing Figure name for figure titles.
         verbose: Boolean to show extra print statements, good for debugging.
           Default False; off.
         live_vis: Boolean to show live visualization, nice to see steps
@@ -70,7 +70,7 @@ def run_simulation(grid_size:int, fidelity:int, tau:int, num_steps:int=1500, fig
     )
 
     # Visualize matplotlib of grid at final timestep
-    v.visualize_grid(ants_on_grid, simulation_grid)
+    v.visualize_grid(ants_on_grid, simulation_grid, figure)
 
     # optional debugging output, live figure
     if live_vis:
