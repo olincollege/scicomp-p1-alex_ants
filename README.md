@@ -10,6 +10,12 @@ This is implemented in Python. Individual agents (ants) move on a Numpy Array (g
 
 `fidelity` - probability per iteration of an ant remaining on a trail with a local concentration of C
 
+## Simulation Outputs
+
+`F` - number of trail follower ants, across the full grid at the last timestep
+
+`L` - number of exploratory (lost) ants, across the full grid at the last timestep
+
 ## Default Grid & Ant Rotation
 
 Ants move one grid space per iteration. Each ant stores its current heading as an integer from 0 to 7, representing one of 8 possible movement directions. This direction is relative to the ant's current position, and is stored in the ant's `direction` attribute. 
