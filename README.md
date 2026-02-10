@@ -57,6 +57,8 @@ Here is a comparison of the simulations this repo produces for figures 3a, b, c 
 
 In the current implementation, the simulated ant trails seem to curl more than the those in the reference figures. The reason behind this has not been fully explored and limits the use of this code. Another unexplored difference between the reference figures and the simulated results are the numbers of F (follower) and L (exploratory) ants at the last timestep; my results have much higher values for both F and L ant concentrations. However, the concentrations in my simualted figures seem to reflect the changing `fidelity` value in a similar way to the reference figures, which shows that the `fidelity` parameter is likely working as intended.
 
+In addition, the current implementation of the code assumes that `fidelity` is not a function of pheromone concentration, i.e., is assumed to be a constant. While this is fine for the benchmark of this project (Figure 3) it limits the simulation capabilities of this code.
+
 Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1500`
 
 ### Figure 3a (`fidelity: 255`)
