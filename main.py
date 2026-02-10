@@ -4,6 +4,7 @@ import simulation_run as sr
 
 
 ######## Fig 3a ########
+figure = '3a'
 fidelity = 255  # according to Fig 3a from the paper
 tau = 12 # according to Fig 3a from the paper
 grid_size = 256 # according to paper
