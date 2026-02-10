@@ -18,18 +18,15 @@ class Grid:
     """
 
     def __init__(self, size:int=256)->None:
-        if isinstance(size, int): # checking grid input type
-            if size % 2 == 0: # checking if grid size even
-                if size > 0: # checking if grid size above 0
-                    self.size = size
-                    self.hill_loc = int(size/2)
-                    self.grid = np.zeros((size, size))
-                else:
-                    raise ValueError("Invalid size input, size input must be larger than 0.")
-            else:
-                raise ValueError("Invalid size input; size input must be even.")
-        else:
+        if not isinstance(size, int): # checking grid input type
             raise TypeError("Invalid input type; size input must be an int.")
+        if size <= 0: # checking if grid size below 0
+            raise ValueError("Invalid size input, size input must be larger than 0.")
+        if size % 2 != 0: # checking if grid size even
+            raise ValueError("Invalid size input; size input must be even.")
+        self.size = size
+        self.hill_loc = int(size/2)
+        self.grid = np.zeros((size, size))
 
     def __repr__(self)->str:
         return (
