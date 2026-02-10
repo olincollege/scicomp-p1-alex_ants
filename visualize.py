@@ -38,7 +38,7 @@ def visualize_grid(ants_on_grid:list[a.Ant], simulation_grid:g.Grid, figure:str)
 
 
 ######## Dynamic Visualization ########
-def visualize_grid_live(ants_on_grid, simulation_grid, step, figure, pause=0.05):
+def visualize_grid_live(ants_on_grid:list[a.Ant], simulation_grid:g.Grid, step:int, figure:str, pause=0.05):
     """
     Show live visualization of grid + ants.
 
