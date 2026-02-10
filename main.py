@@ -14,4 +14,4 @@ live_vis = False
 
 # Run simulation
 if __name__ == "__main__":
-    sr.run_simulation(grid_size, fidelity, tau, num_steps, verbose, live_vis)
+    sr.run_simulation(grid_size, fidelity, tau, figure, num_steps, verbose, live_vis)
