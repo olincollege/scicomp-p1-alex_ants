@@ -32,7 +32,7 @@ def visualize_grid(ants_on_grid:list[a.Ant], simulation_grid:g.Grid, figure:str)
     _plot_grid(simulation_grid, vmax=84)
     _plot_ants(ants_on_grid)
 
-    mp.title(f"Figure {figure}")
+    mp.title(f"Simulated ant trail networks: figure {figure}")
 
     mp.show()
 
@@ -60,7 +60,7 @@ def visualize_grid_live(ants_on_grid:list[a.Ant], simulation_grid:g.Grid, step:i
     _plot_grid(simulation_grid, vmax=84)
     _plot_ants(ants_on_grid)
 
-    mp.title(f"Figure {figure}, Step {step}")
+    mp.title(f"Simulated ant trail networks: figure {figure}, Step {step}")
 
     mp.pause(pause)
 
