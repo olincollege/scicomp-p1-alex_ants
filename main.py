@@ -3,15 +3,24 @@
 import simulation_run as sr
 
 
-######## Fig 3a ########
-figure = '3a'
-fidelity = 255  # according to Fig 3a from the paper
-tau = 12 # according to Fig 3a from the paper
-grid_size = 256 # according to paper
-num_steps = 1500 # according to Fig 3a description from paper
-verbose = False
-live_vis = False
+def run_figures():
+    """
+    Runs simulations for parameters of figure 3a, b, c from the paper. 
+    """
 
-# Run simulation
+    # figure names, fidelity
+    configs = [("3a", 255), ("3b", 251), ("3c", 247),]
+
+    # constants across all figures
+    tau = 8
+    grid_size = 256
+    num_steps = 1500
+    verbose = False
+    live_vis = False
+
+    for figure, fidelity in configs:
+        sr.run_simulation(grid_size, fidelity, tau, figure, num_steps, verbose, live_vis)
+
+
 if __name__ == "__main__":
-    sr.run_simulation(grid_size, fidelity, tau, figure, num_steps, verbose, live_vis)
+    run_figures()
