@@ -30,8 +30,8 @@ def test_set_ant_state_invalid():
     with pytest.raises(
         ValueError,
         match=(
-            "Invalid state; Ant state should be either 'explorer' or"
-            " 'follower'."
+            "Invalid state; Ant state should be either EXPLORER or"
+            " FOLLOWER."
         ),
     ):
         ant.set_ant_state("blah")
