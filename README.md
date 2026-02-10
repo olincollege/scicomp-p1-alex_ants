@@ -53,7 +53,9 @@ In visualizations, ants are displayed as triangular markers pointing their curre
 
 ## Usage Examples & Benchmarks
 
-Here is a comparison of the simulations this repo produces for figures 3a, b, c with the figures in the paper. In the current implementation, the simulated ant trails seem to curl more than the those in the reference figures. The reason behind this has not been fully explored and limits the use of this code. 
+Here is a comparison of the simulations this repo produces for figures 3a, b, c with the figures in the paper. For my simulation figures, I chose to cap the pheromone concentration displayed on the plot at 84 so that fainter pheromone values were also visible. I chose this value from trial and error.
+
+In the current implementation, the simulated ant trails seem to curl more than the those in the reference figures. The reason behind this has not been fully explored and limits the use of this code. Another unexplored difference between the reference figures and the simulated results are the numbers of F (follower) and L (exploratory) ants at the last timestep; my results have much higher values for both F and L ant concentrations. However, the concentrations in my simualted figures seem to reflect the changing `fidelity` value in a similar way to the reference figures, which shows that the `fidelity` parameter is likely working as intended.
 
 Constant parameters across all figures: `tau = 8, grid_size = 256, num_steps = 1500`
 
